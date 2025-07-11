@@ -21,7 +21,8 @@
     "inquirer": "^12.7.0",
     "puppeteer-core": "^24.12.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

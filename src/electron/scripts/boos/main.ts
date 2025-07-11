@@ -4,7 +4,7 @@ import { isLoggedIn, autoLogin } from './scripts/loginService'
 import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin'
 // import { fetchWoffFromPage } from './utils/woffFetcher'
 
-void (async () => {
+export async function runBossAutoDeliver() {
   try {
     logger.info('================ 程序启动 ================')
     const browser = await launchBrowser()
@@ -29,4 +29,4 @@ void (async () => {
   } catch (err) {
     logger.error('主流程发生异常: ' + (err as Error).message)
   }
-})()
+}
