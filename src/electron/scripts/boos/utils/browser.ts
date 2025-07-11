@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer-core'
-import path from 'path'
+import * as path from 'path'
 
 // 启动浏览器
 export async function launchBrowser() {

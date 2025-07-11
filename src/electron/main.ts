@@ -1,13 +1,20 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu } from 'electron'
 import * as path from 'path'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 import { isDev } from './util.js'
-import { runBossAutoDeliver } from './scripts/boos/main'
+import { runBossAutoDeliver } from './scripts/boos/main.js'
 
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    // frame: false, // 关闭原生标题栏
+    // titleBarStyle: 'hidden', // 可选，macOS 下更好看
+    icon: path.join(__dirname, 'duoyunico.ico'),
   })
 
   if (isDev()) {
@@ -19,4 +26,11 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow()
+
+  Menu.setApplicationMenu(null)
+
+  ipcMain.handle('run-boss-auto-deliver', async () => {
+    await runBossAutoDeliver()
+    return '自动投递完成'
+  })
 })

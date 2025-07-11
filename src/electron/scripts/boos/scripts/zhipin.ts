@@ -1,5 +1,5 @@
 import { Page, ElementHandle } from 'puppeteer-core'
-import logger from '../utils/logger'
+import logger from '../utils/logger.js'
 
 /**
  * 自动选择城市并搜索职位

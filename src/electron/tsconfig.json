@@ -6,5 +6,6 @@
     "outDir": "../../dist-electron", // 输出目录
     "skipLibCheck": true, // 跳过库文件检查
     "moduleResolution": "node" // 模块解析方式
-  }
+  },
+  "include": ["./**/*.ts"]
 }

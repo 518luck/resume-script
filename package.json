@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npm-run-all --parallel dev:react dev:electron",
     "dev:react": "vite",
-    "dev:electron": "npm run transpile:electron; cross-env NODE_ENV=development electron .",
+    "dev:electron": "npm run transpile:electron && cross-env NODE_ENV=development electron .",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -17,6 +17,7 @@
     "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
+    "antd": "^5.26.4",
     "dotenv": "^17.2.0",
     "inquirer": "^12.7.0",
     "puppeteer-core": "^24.12.1",
@@ -32,6 +33,7 @@
     "cross-env": "^7.0.3",
     "electron": "^37.2.1",
     "electron-builder": "^26.0.12",
+    "electronmon": "^2.0.3",
     "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

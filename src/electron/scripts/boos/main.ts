@@ -1,7 +1,7 @@
-import { launchBrowser } from './utils/browser'
-import logger from './utils/logger'
-import { isLoggedIn, autoLogin } from './scripts/loginService'
-import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin'
+import { launchBrowser } from './utils/browser.js'
+import logger from './utils/logger.js'
+import { isLoggedIn, autoLogin } from './scripts/loginService.js'
+import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin.js'
 // import { fetchWoffFromPage } from './utils/woffFetcher'
 
 export async function runBossAutoDeliver() {
