@@ -1,0 +1,142 @@
+import { Page } from 'puppeteer-core'
+import logger from '../utils/logger'
+import inquirer from 'inquirer'
+
+/**
+ * 判断当前页面是否已登录
+ *
+ * 该函数会查找页面上是否存在 BOSS直聘的“登录/注册”按钮（a[ka="header-login"]）。
+ * 如果找不到该按钮，说明已登录；如果能找到，说明未登录。
+ *
+ * @param {Page} page - Puppeteer 的 Page 实例，表示要检测的页面
+ * @returns {Promise<boolean>} - 已登录返回 true，未登录返回 false
+ */
+export async function isLoggedIn(page: Page): Promise<boolean> {
+  const loginBtn = await page.$('a[ka="header-login"]')
+  return !loginBtn
+}
+
+/**
+ * 自动登录函数
+ * @param page Puppeteer Page 实例
+ */
+export async function autoLogin(page: Page) {
+  const loginBtn = await page.$('a[ka="header-login"]')
+  logger.info('找到登录按钮')
+  if (loginBtn) {
+    await loginBtn?.click()
+    logger.info('点击了登录按钮')
+  } else {
+    logger.error('完犊子了，没找到登录按钮')
+    return
+  }
+
+  await page.waitForSelector(
+    'input[placeholder="手机号"], input[placeholder="短信验证码"]',
+    {
+      timeout: 10000,
+    }
+  )
+  logger.info('登录表单出现')
+
+  const phone = process.env.PHONE
+  if (!phone) {
+    logger.error('手机号未配置')
+    return
+  }
+  await page.type('input[placeholder="手机号"]', phone, {
+    delay: Math.random() * 150 + 50,
+  })
+  logger.info('手机号输入完成')
+
+  await page.waitForSelector('div[ka="send_sms_code_click"]', {
+    timeout: 100000,
+  })
+  const sendCode = await page.$('div[ka="send_sms_code_click"]')
+  if (sendCode) {
+    await sendCode.click()
+    logger.info('点击了发送验证码按钮')
+  } else {
+    logger.error('完犊子了，没找到发送验证码按钮')
+    return
+  }
+
+  await page.waitForSelector('div[class="yidun_intelli-tips"]', {
+    visible: true,
+    timeout: 10000,
+  })
+
+  const yidunIntelliTips = await page.$('div[class="yidun_intelli-tips"]')
+  if (yidunIntelliTips) {
+    logger.info('点击了滑动验证码')
+    await yidunIntelliTips.click()
+  } else {
+    logger.error('完犊子了，没找到滑动验证码')
+    return
+  }
+
+  /*   await page.waitForSelector('.geetest_radar_tip', { timeout: 15000 })
+  logger.info('滑动验证码出现')
+
+  const geetestRadarTip = await page.$('.geetest_radar_tip')
+  if (geetestRadarTip) {
+    await geetestRadarTip.click()
+    logger.info('点击了滑动验证码')
+  } else {
+    logger.error('完犊子了，没找到滑动验证码')
+    return
+  } */
+
+  await page.waitForSelector('.geetest_panel', { hidden: true, timeout: 60000 })
+  logger.info('滑块验证已通过')
+
+  const { code } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'code',
+      message: '请输入短信验证码：',
+    },
+  ])
+
+  await page.type('input[placeholder="短信验证码"]', code, {
+    delay: Math.random() * 150 + 50,
+  })
+  logger.info('短信验证码输入完成')
+
+  const agreePolicy = await page.$('.agree-policy')
+  if (agreePolicy) {
+    await agreePolicy.click()
+    logger.info('点击了同意协议按钮')
+  } else {
+    logger.error('完犊子了，没找到同意协议按钮')
+    return
+  }
+
+  const signupSubmitButton = await page.$(
+    'button[ka="signup_submit_button_click"]'
+  )
+  if (signupSubmitButton) {
+    await signupSubmitButton.click()
+    logger.info('点击了登录按钮')
+  } else {
+    logger.error('完犊子了，没找到登录按钮')
+    return
+  }
+
+  const dialogSur = await page.waitForSelector("span[ka='dialog_sure']", {
+    timeout: 10000,
+  })
+  if (dialogSur) {
+    await dialogSur.click()
+    logger.info('点击了同意按钮')
+  } else {
+    logger.error('完犊子了，没找到同意按钮')
+    return
+  }
+
+  logger.info('等待登录跳转...')
+  await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 })
+  logger.info('登录流程结束')
+
+  return true
+}
