@@ -1,0 +1,16 @@
+{
+  "appId": "com.duoyun.resume-sender",
+  "files": ["dist-electron", "dist-reract"],
+  "icon": "src/ui/assets/duoyunico.ico",
+  "mac": {
+    "target": ["dmg"]
+  },
+  "linux": {
+    "target": ["AppImage"],
+    "category": "Utility"
+  },
+  "win": {
+    "target": ["portable", "msi"],
+    "language": "zh-CN"
+  }
+}
