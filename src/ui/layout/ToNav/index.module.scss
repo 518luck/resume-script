@@ -1,0 +1,36 @@
+.toNav {
+  -webkit-app-region: drag;
+  width: 100%;
+  height: 30px;
+  background-color: #131418;
+  .macButtons span {
+    -webkit-app-region: no-drag;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(1.3);
+      filter: brightness(1.3);
+      box-shadow: 0 0 5px 2px currentColor;
+    }
+  }
+  .macButtons {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
+  .close {
+    background: #ff5f56;
+  }
+  .minimize {
+    background: #ffbd2e;
+  }
+  .maximize {
+    background: #27c93f;
+  }
+}

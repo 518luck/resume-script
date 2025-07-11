@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "CommonJS",
+    "outDir": "../../dist-electron",
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["./preload.ts"]
+}
