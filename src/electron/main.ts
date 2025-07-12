@@ -2,11 +2,38 @@ import { app, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
 import * as path from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import * as fs from 'fs'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
+import logger from './scripts/boos/utils/logger.js'
+
+// 配置文件路径
+const configPath = path.join(app.getPath('userData'), 'duoyunARConfig.json')
+// 读取配置
+const loadConfig = () => {
+  try {
+    if (fs.existsSync(configPath)) {
+      const data = fs.readFileSync(configPath, 'utf8')
+      return JSON.parse(data)
+    }
+  } catch (error) {
+    logger.error('读取配置失败', error)
+  }
+  return {}
+}
+// 保存配置
+const saveConfig = (config) => {
+  try {
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
+    return true
+  } catch (error) {
+    logger.error('保存配置失败', error)
+    return false
+  }
+}
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -30,10 +57,13 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+  // 创建窗口
   createWindow()
 
+  // 隐藏菜单栏
   Menu.setApplicationMenu(null)
 
+  // 打开开发者工具
   globalShortcut.register('CommandOrControl+Shift+I', () => {
     const focusedWindow = BrowserWindow.getFocusedWindow()
     if (focusedWindow) {
@@ -41,9 +71,11 @@ app.whenReady().then(() => {
     }
   })
 
+  // 窗口最小化
   ipcMain.on('window-minimize', () => {
     BrowserWindow.getFocusedWindow()?.minimize()
   })
+  // 窗口最大化
   ipcMain.on('window-maximize', () => {
     const win = BrowserWindow.getFocusedWindow()
     if (win?.isMaximized()) {
@@ -52,12 +84,37 @@ app.whenReady().then(() => {
       win?.maximize()
     }
   })
+  // 窗口关闭
   ipcMain.on('window-close', () => {
     BrowserWindow.getFocusedWindow()?.close()
   })
 
+  // 窗口关闭macOS下不退出
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  })
+  // 窗口激活macOS下不退出
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
+  })
+
+  // 自动投递
   ipcMain.handle('run-boss-auto-deliver', async () => {
     await runBossAutoDeliver()
     return '自动投递完成'
+  })
+
+  // 保存配置
+  ipcMain.handle('save-config', async (event, config) => {
+    return saveConfig(config)
+  })
+
+  // 读取配置
+  ipcMain.handle('load-config', async () => {
+    return loadConfig()
   })
 })

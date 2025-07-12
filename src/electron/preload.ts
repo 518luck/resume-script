@@ -7,4 +7,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   closeWindow: () => ipcRenderer.send('window-close'),
   // 自动投递
   runBossAutoDeliver: () => ipcRenderer.invoke('run-boss-auto-deliver'),
+
+  // 保存配置
+  saveConfig: (config) => ipcRenderer.invoke('save-config', config),
+  // 读取配置
+  loadConfig: () => ipcRenderer.invoke('load-config'),
 })
