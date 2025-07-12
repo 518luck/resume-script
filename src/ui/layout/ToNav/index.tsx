@@ -23,13 +23,6 @@ const ToNav = () => {
         <span
           className={styles.close}
           onClick={() => window.electronAPI.closeWindow()}></span>
-        <span
-          className={styles.close}
-          onClick={() =>
-            console.log('window.electronAPI:', window.electronAPI)
-          }>
-          测试
-        </span>
       </div>
     </div>
   )
