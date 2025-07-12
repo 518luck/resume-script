@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import type { FormProps } from 'antd'
 import { Form, Input, message, Button } from 'antd'
+import { PhoneOutlined, BugOutlined } from '@ant-design/icons'
 
 import styles from './index.module.scss'
 
@@ -41,12 +42,26 @@ const Config = () => {
   return (
     <div className={styles.config}>
       <section className={styles.section}>
-        <div className={styles.header}></div>
+        <div className={styles.header}>
+          <div className={styles.header_left}>
+            <BugOutlined style={{ fontSize: '20px', color: '#ed701a' }} />
+            <span>自动投递配置</span>
+          </div>
+          <Button variant='solid' className={styles.header_Button}>
+            帮助
+          </Button>
+        </div>
         <div className={styles.content}>
           <Form form={form} onFinish={handleSaveConfigOnFinish}>
-            <Form.Item label='手机号' name='phone'>
-              <Input />
-            </Form.Item>
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <PhoneOutlined className={styles.iconPhone} />
+                <span className={styles.labelPhone}>手机号</span>
+              </div>
+              <Form.Item name='phone' className={styles.inputContainer}>
+                <Input />
+              </Form.Item>
+            </div>
 
             <Form.Item>
               <Button type='primary' htmlType='submit'>

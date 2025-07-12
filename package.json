@@ -18,6 +18,7 @@
     "dist:linux": "npm run transpile:preload && npm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
     "antd": "^5.26.4",
     "dotenv": "^17.2.0",
     "inquirer": "^12.7.0",

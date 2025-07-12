@@ -12,5 +12,74 @@
     background-color: #1d2027;
     border-radius: 10px;
     overflow: hidden;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px;
+      margin-bottom: 20px;
+      color: #fff;
+      .header_left {
+        display: flex;
+        align-items: center;
+        font-weight: 800;
+        gap: 10px;
+      }
+      .header_Button {
+        background-color: #2b9d7c;
+        border: none;
+        color: #fff;
+      }
+    }
+    .content {
+      padding: 20px;
+      .inputRow {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      // Input 样式控制
+      :global(.ant-input) {
+        min-width: 200px; // 控制输入框长度
+        background-color: #2a2d35; // 背景颜色
+        border: 1px solid #3a3d45;
+        color: #fff;
+        transition: all 0.3s ease;
+
+        // 鼠标悬停效果
+        &:hover {
+          border-color: none;
+          background-color: #2a2e35;
+          // box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
+        // 聚焦效果
+        &:focus {
+          border-color: #ed701a;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+          background-color: #2d3038;
+        }
+
+        // 占位符颜色
+        &::placeholder {
+          color: #666;
+        }
+      }
+    }
   }
+}
+
+.iconPhone {
+  color: #ed701a;
+  font-size: 15px;
+  transform: translateY(2px);
+}
+.labelPhone {
+  background: linear-gradient(45deg, #1890ff, #52c41a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  line-height: 1;
+  margin-left: 10px;
 }
