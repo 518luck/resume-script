@@ -7,20 +7,27 @@
   align-items: center;
   .leftNavArticleItem {
     width: 90%;
-    height: 7vh; // 使用视口高度，会随屏幕变化
+    height: 7vh;
     color: #9ca2ae;
-    line-height: 7vh; // 保持与height一致
+    line-height: 7vh;
     font-size: 2.5vh;
     padding-left: 20%;
     margin-top: 1vh;
     cursor: pointer;
     border-radius: 10px;
     transition: all 0.2s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
     &:hover {
       color: #fff;
-      background-color: #2b9d7c;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); // 文字发光效果
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
       transform: scale(1.02);
+    }
+    &:global(.active) {
+      background-color: #2b9d7c;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
   }
 }

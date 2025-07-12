@@ -1,11 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { Suspense } from 'react'
+import React from 'react'
 
 import App from '../App'
-import Config from '../views/Config'
-import Boss from '../views/Boss'
-import Nowcoder from '../views/Nowcoder'
-import AboutUs from '../views/AboutUs'
-import Log from '../views/Log'
+
+const Config = React.lazy(() => import('../views/Config'))
+const Boss = React.lazy(() => import('../views/Boss'))
+const Nowcoder = React.lazy(() => import('../views/Nowcoder'))
+const AboutUs = React.lazy(() => import('../views/AboutUs'))
+const Log = React.lazy(() => import('../views/Log'))
 
 const router = createBrowserRouter([
   {
@@ -14,27 +17,51 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Config />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Config />
+          </Suspense>
+        ),
       },
       {
         path: '/config',
-        element: <Config />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Config />
+          </Suspense>
+        ),
       },
       {
         path: '/boss',
-        element: <Boss />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Boss />
+          </Suspense>
+        ),
       },
       {
         path: '/nowcoder',
-        element: <Nowcoder />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Nowcoder />
+          </Suspense>
+        ),
       },
       {
         path: '/about',
-        element: <AboutUs />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <AboutUs />
+          </Suspense>
+        ),
       },
       {
         path: '/logs',
-        element: <Log />,
+        element: (
+          <Suspense fallback={<div>加载中...</div>}>
+            <Log />
+          </Suspense>
+        ),
       },
     ],
   },

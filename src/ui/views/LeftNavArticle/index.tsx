@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import styles from './index.module.scss'
 
 const LeftNavArticle = () => {
