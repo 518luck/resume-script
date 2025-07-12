@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "../../dist-electron",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleDetection": "force",
+    "lib": ["ESNext", "DOM"]
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["preload/preload.ts"]
+}

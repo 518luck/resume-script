@@ -3,9 +3,10 @@
     "strict": true,
     "target": "ESNext",
     "module": "CommonJS",
-    "outDir": "../../dist-electron",
+    "outDir": "../../../dist-electron",
     "skipLibCheck": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noEmitOnError": false
   },
   "include": ["./preload.ts"]
 }

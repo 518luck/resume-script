@@ -1,15 +1,5 @@
 import styles from './index.module.scss'
 
-declare global {
-  interface Window {
-    electronAPI: {
-      closeWindow: () => void
-      minimizeWindow: () => void
-      maximizeWindow: () => void
-    }
-  }
-}
-
 const ToNav = () => {
   return (
     <div className={styles.toNav}>

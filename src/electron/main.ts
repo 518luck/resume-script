@@ -1,14 +1,21 @@
 import { app, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
 import * as path from 'path'
+import * as fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import * as fs from 'fs'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
 import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
 import logger from './scripts/boos/utils/logger.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+export interface Config {
+  phone?: string
+  city?: string
+  job?: string
+  [key: string]: unknown
+}
 
 // 配置文件路径
 const configPath = path.join(app.getPath('userData'), 'duoyunARConfig.json')
@@ -25,7 +32,7 @@ const loadConfig = () => {
   return {}
 }
 // 保存配置
-const saveConfig = (config) => {
+const saveConfig = (config: Config) => {
   try {
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
     return true
@@ -110,7 +117,9 @@ app.whenReady().then(() => {
 
   // 保存配置
   ipcMain.handle('save-config', async (event, config) => {
-    return saveConfig(config)
+    const result = saveConfig(config)
+    logger.info(`保存地址: ${configPath}`)
+    return result
   })
 
   // 读取配置
