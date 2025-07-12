@@ -10,6 +10,11 @@ import logger from './scripts/boos/utils/logger.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// 开发环境禁用安全警告, 生产环境不使用(记得删除)
+if (isDev()) {
+  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
+}
+
 export interface Config {
   phone?: string
   city?: string

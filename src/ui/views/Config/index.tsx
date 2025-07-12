@@ -26,9 +26,7 @@ const Config = () => {
 
   const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
     try {
-      console.log('表单提交被触发，values:', values)
       const success = await window.electronAPI.saveConfig(values)
-      console.log('saveConfig 返回结果:', success)
       if (success) {
         message.success('配置保存成功')
       } else {
