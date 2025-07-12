@@ -25,6 +25,7 @@
     "puppeteer-core": "^24.12.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.3",
     "scss": "^0.2.4",
     "winston": "^3.17.0"
   },
