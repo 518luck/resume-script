@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/',
+        index: true, // 使用index而不是path: '/'
         element: (
           <Suspense fallback={<div>加载中...</div>}>
             <Config />
