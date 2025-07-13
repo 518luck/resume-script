@@ -1,12 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormProps } from 'antd'
-import { Form, Input, message, Button } from 'antd'
-import { PhoneOutlined, BugOutlined } from '@ant-design/icons'
+import { Form, Input, message, Button, Tooltip, Switch } from 'antd'
+import {
+  PhoneOutlined,
+  BugOutlined,
+  CopyOutlined,
+  DesktopOutlined,
+} from '@ant-design/icons'
 
 import styles from './index.module.scss'
 
 const Config = () => {
   const [form] = Form.useForm()
+  const [configPath, setConfigPath] = useState<string>('')
 
   useEffect(() => {
     const loadSavedConfig = async () => {
@@ -24,6 +30,18 @@ const Config = () => {
 
     loadSavedConfig()
   }, [form])
+
+  useEffect(() => {
+    const getConfigPath = async () => {
+      try {
+        const configPath = await window.electronAPI.getConfigPath()
+        setConfigPath(configPath)
+      } catch {
+        message.error('获取配置文件路径失败')
+      }
+    }
+    getConfigPath()
+  })
 
   const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
     try {
@@ -56,11 +74,60 @@ const Config = () => {
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <PhoneOutlined className={styles.iconPhone} />
-                <span className={styles.labelPhone}>手机号</span>
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelPhone}>手机号</span>
+                  <span className={styles.annotation}>
+                    主要用来注册的时候使用
+                  </span>
+                </div>
               </div>
-              <Form.Item name='phone' className={styles.inputContainer}>
-                <Input />
+              <Form.Item
+                name='phone'
+                className={styles.inputContainer}
+                rules={[
+                  { required: true, message: '请输入手机号' },
+                  {
+                    pattern: /^1[3-9]\d{9}$/,
+                    message: '请输入正确的手机号格式',
+                  },
+                ]}>
+                <Input placeholder='请输入手机号' />
               </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <CopyOutlined className={styles.iconPath} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelPath}>配置文件路径</span>
+                  <span className={styles.annotation}>
+                    用来保存配置文件的信息
+                  </span>
+                </div>
+              </div>
+              <Tooltip title={configPath} placement='top'>
+                <span className={styles.right_container_text}>
+                  {configPath}
+                </span>
+              </Tooltip>
+            </div>
+
+            <div className={styles.inputRow} style={{ marginTop: '20px' }}>
+              <div className={styles.labelContainer}>
+                <DesktopOutlined className={styles.iconAcephalous} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelAcephalous}>无头模式</span>
+                  <span className={styles.annotation}>
+                    浏览器在无头模式下运行，不会打开浏览器窗口
+                  </span>
+                </div>
+              </div>
+              {/*  <Tooltip title={configPath} placement='top'>
+                <span className={styles.right_container_text}>
+                  {configPath}
+                </span>
+              </Tooltip> */}
+              <Switch defaultChecked />
             </div>
 
             <Form.Item>

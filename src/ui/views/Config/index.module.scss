@@ -36,6 +36,31 @@
       .inputRow {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 10px;
+        .labelContainer {
+          display: flex;
+          align-items: start;
+          gap: 10px;
+          .labelContainer_text {
+            display: flex;
+            flex-direction: column;
+            .annotation {
+              margin-top: 5px;
+              font-size: 12px;
+              color: #999;
+              user-select: none;
+            }
+          }
+        }
+        .right_container_text {
+          color: #fff;
+          font-size: 14px;
+          user-select: none;
+          width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
 
       // Input 样式控制
@@ -55,8 +80,8 @@
 
         // 聚焦效果
         &:focus {
-          border-color: #ed701a;
-          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+          border-color: #8a550a;
+          box-shadow: 0 0 0 2px rgba(247, 200, 115, 0.2);
           background-color: #2d3038;
         }
 
@@ -69,17 +94,43 @@
   }
 }
 
-.iconPhone {
-  color: #ed701a;
-  font-size: 15px;
-  transform: translateY(2px);
-}
-.labelPhone {
-  background: linear-gradient(45deg, #1890ff, #52c41a);
+.text_label_general {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 800;
   line-height: 1;
   margin-left: 10px;
+  user-select: none;
+}
+.iconPhone {
+  color: #fddb92;
+  font-size: 15px;
+}
+.labelPhone {
+  background-image: linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  @extend .text_label_general;
+}
+
+.iconPath {
+  color: #69eacb;
+  font-size: 15px;
+}
+.labelPath {
+  background-image: linear-gradient(
+    -225deg,
+    #69eacb 0%,
+    #eaccf8 48%,
+    #6654f1 100%
+  );
+  @extend .text_label_general;
+}
+
+.iconAcephalous {
+  color: #acb6e5;
+  font-size: 15px;
+}
+.labelAcephalous {
+  background-image: linear-gradient(to right, #acb6e5, #86fde8);
+  @extend .text_label_general;
 }

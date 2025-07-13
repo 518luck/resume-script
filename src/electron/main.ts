@@ -131,4 +131,9 @@ app.whenReady().then(() => {
   ipcMain.handle('load-config', async () => {
     return loadConfig()
   })
+
+  //暴露配置文件路径
+  ipcMain.handle('get-config-path', async () => {
+    return configPath
+  })
 })

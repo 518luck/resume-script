@@ -16,6 +16,8 @@ interface ElectronAPI {
   saveConfig: (config: Config) => Promise<boolean>
   // 读取配置
   loadConfig: () => Promise<Config>
+  // 暴露配置文件路径
+  getConfigPath: () => Promise<string>
 }
 
 declare global {
