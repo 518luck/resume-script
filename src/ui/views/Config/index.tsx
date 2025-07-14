@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import type { FormProps } from 'antd'
-import { Form, Input, message, Button, Tooltip, Switch } from 'antd'
+import { Form, Input, message, Button, Tooltip, Switch, Select } from 'antd'
 import {
   PhoneOutlined,
   BugOutlined,
   CopyOutlined,
   DesktopOutlined,
+  TruckOutlined,
+  FormOutlined,
 } from '@ant-design/icons'
 
 import styles from './index.module.scss'
@@ -13,6 +15,13 @@ import styles from './index.module.scss'
 const Config = () => {
   const [form] = Form.useForm()
   const [configPath, setConfigPath] = useState<string>('')
+
+  const cityOptions = [
+    { label: '深圳', value: '深圳' },
+    { label: '北京', value: '北京' },
+    { label: '上海', value: '上海' },
+    { label: '广州', value: '广州' },
+  ]
 
   useEffect(() => {
     const loadSavedConfig = async () => {
@@ -133,6 +142,49 @@ const Config = () => {
               </Tooltip> */}
               <Form.Item name='isHeadless'>
                 <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
+              </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <TruckOutlined className={styles.iconCity} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelCity}>择业城市</span>
+                  <span className={styles.annotation}>
+                    输的时候去BOSS看下,一字不差的输入
+                  </span>
+                </div>
+              </div>
+
+              <Form.Item name='city' initialValue={cityOptions[0]?.value}>
+                <Select
+                  showSearch
+                  filterOption={(input, option) =>
+                    (option?.label ?? '')
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={cityOptions}
+                  className={styles.selectCitys}
+                />
+              </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <FormOutlined className={styles.iconJob} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelJob}>工作职位</span>
+                  <span className={styles.annotation}>
+                    搜索栏输入职位的时候用
+                  </span>
+                </div>
+              </div>
+              <Form.Item
+                name='job'
+                className={styles.inputContainer}
+                rules={[{ required: true, message: '请输入工作职位' }]}>
+                <Input placeholder='例如: 初级前端开发工程师' />
               </Form.Item>
             </div>
 

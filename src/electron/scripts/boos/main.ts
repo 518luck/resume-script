@@ -3,11 +3,12 @@ import logger from './utils/logger.js'
 import { isLoggedIn, autoLogin } from './scripts/loginService.js'
 import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin.js'
 // import { fetchWoffFromPage } from './utils/woffFetcher'
+import { Config } from '../../../types/electron.js'
 
-export async function runBossAutoDeliver() {
+export async function runBossAutoDeliver(config: Config) {
   try {
     logger.info('================ 程序启动 ================')
-    const browser = await launchBrowser()
+    const browser = await launchBrowser(config.isHeadless || false)
     const page = await browser.newPage()
 
     logger.info('浏览器启动')

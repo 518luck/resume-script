@@ -1,7 +1,8 @@
-interface Config {
+export interface Config {
   phone?: string
   city?: string
   job?: string
+  isHeadless?: boolean
   [key: string]: unknown
 }
 

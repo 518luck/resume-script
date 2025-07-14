@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { Suspense } from 'react'
 import React from 'react'
 
@@ -16,12 +16,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true, // 使用index而不是path: '/'
-        element: (
-          <Suspense fallback={<div>加载中...</div>}>
-            <Config />
-          </Suspense>
-        ),
+        index: true,
+        element: <Navigate to='/config' replace />,
       },
       {
         path: '/config',

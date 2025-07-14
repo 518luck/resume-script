@@ -116,7 +116,8 @@ app.whenReady().then(() => {
 
   // 自动投递
   ipcMain.handle('run-boss-auto-deliver', async () => {
-    await runBossAutoDeliver()
+    const config = loadConfig()
+    await runBossAutoDeliver(config)
     return '自动投递完成'
   })
 

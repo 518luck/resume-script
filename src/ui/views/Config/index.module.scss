@@ -1,3 +1,8 @@
+.focus {
+  border-color: #8a550a;
+  box-shadow: 0 0 0 2px rgba(247, 200, 115, 0.2);
+  background-color: #2d3038;
+}
 .config {
   width: 100%;
   height: 100%;
@@ -80,9 +85,7 @@
 
         // 聚焦效果
         &:focus {
-          border-color: #8a550a;
-          box-shadow: 0 0 0 2px rgba(247, 200, 115, 0.2);
-          background-color: #2d3038;
+          @extend .focus;
         }
 
         // 占位符颜色
@@ -103,6 +106,7 @@
   margin-left: 10px;
   user-select: none;
 }
+
 .iconPhone {
   color: #fddb92;
   font-size: 15px;
@@ -132,5 +136,51 @@
 }
 .labelAcephalous {
   background-image: linear-gradient(to right, #acb6e5, #86fde8);
+  @extend .text_label_general;
+}
+
+.iconCity {
+  color: #d4ffec;
+  font-size: 15px;
+}
+.labelCity {
+  background-image: linear-gradient(
+    -225deg,
+    #d4ffec 0%,
+    #57f2cc 48%,
+    #4596fb 100%
+  );
+  @extend .text_label_general;
+}
+
+.selectCitys {
+  :global(.ant-select-selector) {
+    background-color: #2a2d35 !important; // 背景颜色
+    border: 1px solid #3a3d45 !important;
+    color: #fff !important;
+    transition: all 0.3s ease !important;
+  }
+}
+
+:global(.ant-select-dropdown) {
+  background-color: #222831 !important;
+  .ant-select-item-option-content {
+    color: #fff !important;
+  }
+}
+:global(.ant-select-item) {
+  background-color: #222831 !important;
+  color: #fff !important;
+  &:hover {
+    background-color: #222831 !important;
+  }
+}
+
+.iconJob {
+  color: #e65c00;
+  font-size: 15px;
+}
+.labelJob {
+  background-image: linear-gradient(to right, #e65c00, #f9d423);
   @extend .text_label_general;
 }
