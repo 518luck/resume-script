@@ -57,6 +57,10 @@ const Config = () => {
     }
   }
 
+  const handleIsHeadlessOnChange = (checked: boolean) => {
+    console.log(checked)
+  }
+
   return (
     <div className={styles.config}>
       <section className={styles.section}>
@@ -127,7 +131,9 @@ const Config = () => {
                   {configPath}
                 </span>
               </Tooltip> */}
-              <Switch defaultChecked />
+              <Form.Item name='isHeadless'>
+                <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
+              </Form.Item>
             </div>
 
             <Form.Item>
