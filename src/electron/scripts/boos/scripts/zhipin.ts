@@ -1,5 +1,6 @@
 import { Page, ElementHandle } from 'puppeteer-core'
 import logger from '../utils/logger.js'
+import { Config } from '../../../../types/electron.js'
 
 /**
  * 自动选择城市并搜索职位
@@ -18,7 +19,7 @@ import logger from '../utils/logger.js'
  * @environment CITY - 需设置为目标城市名称（如“北京”）
  * @environment JOB - 需设置为搜索的职位关键词
  */
-export async function selectCity(page: Page) {
+export async function selectCity(page: Page, config: Config) {
   const citySelect = await page.$('p[ka="header-switch-city"]')
   if (citySelect) {
     await citySelect.click()
@@ -32,7 +33,7 @@ export async function selectCity(page: Page) {
     timeout: 10000,
   })
   logger.info('城市选择框出现')
-  const city = process.env.CITY
+  const city = config.city
   if (!city) {
     logger.error('城市未配置')
     return
@@ -54,7 +55,7 @@ export async function selectCity(page: Page) {
     return
   }
 
-  const job = process.env.JOB
+  const job = config.job
   if (!job) {
     logger.error('职位未配置')
     return

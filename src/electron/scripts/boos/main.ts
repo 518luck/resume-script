@@ -22,10 +22,10 @@ export async function runBossAutoDeliver(config: Config) {
     logger.info(`${checkLogin ? '已登录' : '未登录'}`)
 
     if (!checkLogin) {
-      await autoLogin(page)
+      await autoLogin(page, config)
     }
 
-    await selectCity(page)
+    await selectCity(page, config)
     await clickAllJobsAndCommunicate(page)
   } catch (err) {
     logger.error('主流程发生异常: ' + (err as Error).message)

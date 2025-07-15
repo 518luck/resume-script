@@ -1,6 +1,7 @@
 import { Page } from 'puppeteer-core'
 import logger from '../utils/logger.js'
 import inquirer from 'inquirer'
+import { Config } from '../../../../types/electron.js'
 
 /**
  * 判断当前页面是否已登录
@@ -20,7 +21,7 @@ export async function isLoggedIn(page: Page): Promise<boolean> {
  * 自动登录函数
  * @param page Puppeteer Page 实例
  */
-export async function autoLogin(page: Page) {
+export async function autoLogin(page: Page, config: Config) {
   const loginBtn = await page.$('a[ka="header-login"]')
   logger.info('找到登录按钮')
   if (loginBtn) {
@@ -39,7 +40,7 @@ export async function autoLogin(page: Page) {
   )
   logger.info('登录表单出现')
 
-  const phone = process.env.PHONE
+  const phone = config.phone
   if (!phone) {
     logger.error('手机号未配置')
     return
