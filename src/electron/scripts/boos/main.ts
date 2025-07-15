@@ -1,5 +1,5 @@
 import { launchBrowser } from './utils/browser.js'
-import logger from './utils/logger.js'
+import logger from '../../utils/logger.js'
 import { isLoggedIn, autoLogin } from './scripts/loginService.js'
 import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin.js'
 // import { fetchWoffFromPage } from './utils/woffFetcher'
@@ -7,9 +7,11 @@ import { Config } from '../../../types/electron.js'
 
 export async function runBossAutoDeliver(config: Config) {
   try {
-    logger.info('================ 程序启动 ================')
+    logger.info('准备启动浏览器')
     const browser = await launchBrowser(config.isHeadless || false)
+    logger.info('浏览器已启动')
     const page = await browser.newPage()
+    logger.info('新页面已创建')
 
     logger.info('浏览器启动')
     await page.goto('https://www.zhipin.com')

@@ -82,6 +82,7 @@ const Config = () => {
             帮助
           </Button>
         </div>
+
         <div className={styles.content}>
           <Form form={form} onFinish={handleSaveConfigOnFinish}>
             <div className={styles.inputRow}>
@@ -135,11 +136,7 @@ const Config = () => {
                   </span>
                 </div>
               </div>
-              {/*  <Tooltip title={configPath} placement='top'>
-                <span className={styles.right_container_text}>
-                  {configPath}
-                </span>
-              </Tooltip> */}
+
               <Form.Item name='isHeadless'>
                 <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
               </Form.Item>

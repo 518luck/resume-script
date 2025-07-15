@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer-core'
-import logger from '../utils/logger.js'
+import logger from '../../../utils/logger.js'
 import inquirer from 'inquirer'
 import { Config } from '../../../../types/electron.js'
 

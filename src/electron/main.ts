@@ -5,7 +5,8 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
-import logger from './scripts/boos/utils/logger.js'
+import logger from './utils/logger.js'
+import { watchLogFile } from './utils/logUpdated.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -66,11 +67,13 @@ const createWindow = () => {
   } else {
     win.loadFile(path.join(app.getAppPath(), 'dist-reract/index.html'))
   }
+  return win
 }
 
 app.whenReady().then(() => {
   // 创建窗口
-  createWindow()
+  const win = createWindow()
+  watchLogFile(win)
 
   // 隐藏菜单栏
   Menu.setApplicationMenu(null)
@@ -136,5 +139,18 @@ app.whenReady().then(() => {
   //暴露配置文件路径
   ipcMain.handle('get-config-path', async () => {
     return configPath
+  })
+
+  // 获取日志内容
+  ipcMain.handle('get-log-content', async () => {
+    try {
+      return await fs.promises.readFile(
+        path.join(app.getPath('userData'), 'logs/app.log'),
+        'utf-8'
+      )
+    } catch (e) {
+      console.error('读取日志文件失败:', e)
+      return '读取日志文件失败'
+    }
   })
 })
