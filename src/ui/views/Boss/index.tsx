@@ -22,8 +22,13 @@ const Boss = () => {
     })
   }, [])
 
-  const handleRunBossAutoDeliver = async () => {
+  const handleRunBossAutoDeliverOnClick = async () => {
     await window.electronAPI.runBossAutoDeliver()
+  }
+
+  const handleClearLogsOnClick = async () => {
+    setLogs('')
+    await window.electronAPI.clearLogs()
   }
 
   return (
@@ -51,8 +56,11 @@ const Boss = () => {
       </header>
       <main className={styles.main}>
         <div className={styles.main_left}>
-          <Button type='primary' onClick={handleRunBossAutoDeliver}>
+          <Button type='primary' onClick={handleRunBossAutoDeliverOnClick}>
             一件投递
+          </Button>
+          <Button type='primary' onClick={handleClearLogsOnClick}>
+            清除日志
           </Button>
         </div>
         <div className={styles.main_right}>鸡汤</div>

@@ -25,6 +25,8 @@ interface ElectronAPI {
   getLogContent: () => Promise<string>
   // 获取日志文件路径
   getLogPath: () => Promise<string>
+  // 清除日志
+  clearLogs: () => Promise<void>
 }
 
 declare global {

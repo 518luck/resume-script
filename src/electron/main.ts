@@ -5,7 +5,7 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
-import { logger, logUpdated } from './utils/index.js'
+import { clearLogs, logger, logUpdated } from './utils/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -155,5 +155,10 @@ app.whenReady().then(() => {
   // 获取日志文件路径
   ipcMain.handle('get-log-path', async () => {
     return logPath
+  })
+
+  // 清除日志
+  ipcMain.handle('clear-logs', async () => {
+    clearLogs(logPath)
   })
 })
