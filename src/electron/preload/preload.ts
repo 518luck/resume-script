@@ -34,4 +34,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 获取日志内容
   getLogContent: () => ipcRenderer.invoke('get-log-content'),
+
+  // 获取日志文件路径
+  getLogPath: () => ipcRenderer.invoke('get-log-path'),
 })

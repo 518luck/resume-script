@@ -5,8 +5,7 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
-import logger from './utils/logger.js'
-import { watchLogFile } from './utils/logUpdated.js'
+import { logger, logUpdated } from './utils/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -25,6 +24,8 @@ export interface Config {
 
 // 配置文件路径
 const configPath = path.join(app.getPath('userData'), 'duoyunARConfig.json')
+// 日志文件路径
+const logPath = path.join(app.getPath('userData'), 'logs/app.log')
 // 读取配置
 const loadConfig = () => {
   try {
@@ -73,7 +74,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   // 创建窗口
   const win = createWindow()
-  watchLogFile(win)
+  logUpdated(win)
 
   // 隐藏菜单栏
   Menu.setApplicationMenu(null)
@@ -110,6 +111,7 @@ app.whenReady().then(() => {
       app.quit()
     }
   })
+
   // 窗口激活macOS下不退出
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -144,13 +146,14 @@ app.whenReady().then(() => {
   // 获取日志内容
   ipcMain.handle('get-log-content', async () => {
     try {
-      return await fs.promises.readFile(
-        path.join(app.getPath('userData'), 'logs/app.log'),
-        'utf-8'
-      )
+      return await fs.promises.readFile(logPath, 'utf-8')
     } catch (e) {
       console.error('读取日志文件失败:', e)
       return '读取日志文件失败'
     }
+  })
+  // 获取日志文件路径
+  ipcMain.handle('get-log-path', async () => {
+    return logPath
   })
 })

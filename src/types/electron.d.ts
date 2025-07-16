@@ -23,6 +23,8 @@ interface ElectronAPI {
   onLogUpdated: (callback: (data: string) => void) => void
   // 获取日志内容
   getLogContent: () => Promise<string>
+  // 获取日志文件路径
+  getLogPath: () => Promise<string>
 }
 
 declare global {

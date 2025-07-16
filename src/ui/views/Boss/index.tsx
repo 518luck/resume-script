@@ -1,13 +1,11 @@
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
-
-const handleRunBossAutoDeliver = async () => {
-  await window.electronAPI.runBossAutoDeliver()
-}
+import { AppstoreOutlined } from '@ant-design/icons'
 
 const Boss = () => {
   const [logs, setLogs] = useState('')
+  const [logPath, setLogPath] = useState('')
   useEffect(() => {
     // 先获取全部日志
 
@@ -19,13 +17,36 @@ const Boss = () => {
       console.log('收到新日志:', newLog)
       setLogs((old) => old + newLog)
     })
+    window.electronAPI.getLogPath().then((path) => {
+      setLogPath(path)
+    })
   }, [])
+
+  const handleRunBossAutoDeliver = async () => {
+    await window.electronAPI.runBossAutoDeliver()
+  }
 
   return (
     <div className={styles.boss}>
       <header className={styles.header}>
         <div className={styles.header_System}>
-          <span>系统类型</span>
+          <AppstoreOutlined />
+          <span className={styles.System_type}>系统类型</span>
+        </div>
+        <div className={styles.header_footer}>
+          <div className={styles.header_footer_top}>
+            <div className={styles.log_path_leven}>
+              日志地址:
+              <Tooltip title={logPath}>
+                <span>{logPath}</span>
+              </Tooltip>
+            </div>
+            <span>日志地址</span>
+          </div>
+          <div className={styles.header_footer_footer}>
+            <span>日志地址</span>
+            <span>日志地址</span>
+          </div>
         </div>
       </header>
       <main className={styles.main}>
