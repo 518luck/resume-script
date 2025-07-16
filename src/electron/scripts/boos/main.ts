@@ -11,15 +11,19 @@ export async function runBossAutoDeliver(config: Config) {
     const browser = await launchBrowser(config.isHeadless || false)
     logger.info('浏览器已启动')
     const page = await browser.newPage()
-    logger.info('新页面已创建')
+    logger.info('建立新标签页面')
 
-    logger.info('浏览器启动')
-    await page.goto('https://www.zhipin.com')
+    logger.info('准备跳转至BOSS直聘首页')
+    try {
+      await page.goto('https://www.zhipin.com', { timeout: 30000 })
+    } catch (err) {
+      logger.error('跳转至BOSS直聘首页失败: ' + (err as Error).message)
+    }
 
     /*   logger.info('开始获取 woff 字体')
   await fetchWoffFromPage(page, '../data/woff_fonts') */
 
-    logger.info('开始判断是否登录')
+    logger.info('开始寻找登录按钮')
     const checkLogin = await isLoggedIn(page)
     logger.info(`${checkLogin ? '已登录' : '未登录'}`)
 

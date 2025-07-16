@@ -1,6 +1,8 @@
+import { app } from 'electron'
 import { Page } from 'puppeteer-core'
-import logger from '../../../utils/logger.js'
 import inquirer from 'inquirer'
+
+import { logger } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
 
 /**
@@ -13,8 +15,15 @@ import { Config } from '../../../../types/electron.js'
  * @returns {Promise<boolean>} - 已登录返回 true，未登录返回 false
  */
 export async function isLoggedIn(page: Page): Promise<boolean> {
-  const loginBtn = await page.$('a[ka="header-login"]')
-  return !loginBtn
+  try {
+    await page.waitForSelector('a[ka="header-login"]', { timeout: 10000 })
+    logger.info('找到登录按钮')
+    return false
+  } catch (err) {
+    logger.info('未找到登录按钮: ' + (err as Error).message)
+    app.exit(1)
+    return true
+  }
 }
 
 /**
@@ -23,7 +32,6 @@ export async function isLoggedIn(page: Page): Promise<boolean> {
  */
 export async function autoLogin(page: Page, config: Config) {
   const loginBtn = await page.$('a[ka="header-login"]')
-  logger.info('找到登录按钮')
   if (loginBtn) {
     await loginBtn?.click()
     logger.info('点击了登录按钮')
