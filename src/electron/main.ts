@@ -38,6 +38,7 @@ const loadConfig = () => {
   }
   return {}
 }
+const config = loadConfig()
 // 保存配置
 const saveConfig = (config: Config) => {
   try {
@@ -64,7 +65,8 @@ const createWindow = () => {
   })
 
   if (isDev()) {
-    win.loadURL('http://localhost:5123')
+    win.loadURL(`http://localhost:${config.portNumber}`)
+    logger.info(`端口号为:${config.portNumber}`)
   } else {
     win.loadFile(path.join(app.getAppPath(), 'dist-reract/index.html'))
   }
@@ -121,7 +123,6 @@ app.whenReady().then(() => {
 
   // 自动投递
   ipcMain.handle('run-boss-auto-deliver', async () => {
-    const config = loadConfig()
     await runBossAutoDeliver(config)
     return '自动投递完成'
   })

@@ -1,5 +1,5 @@
 import { Page, ElementHandle } from 'puppeteer-core'
-import logger from '../../../utils/logger.js'
+import { logger } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
 
 /**

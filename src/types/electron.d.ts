@@ -1,8 +1,9 @@
 export interface Config {
   phone?: string
+  isHeadless?: boolean
   city?: string
   job?: string
-  isHeadless?: boolean
+  portNumber?: number
   [key: string]: unknown
 }
 

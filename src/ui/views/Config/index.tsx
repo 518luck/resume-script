@@ -8,6 +8,7 @@ import {
   DesktopOutlined,
   TruckOutlined,
   FormOutlined,
+  BranchesOutlined,
 } from '@ant-design/icons'
 
 import styles from './index.module.scss'
@@ -182,6 +183,24 @@ const Config = () => {
                 className={styles.inputContainer}
                 rules={[{ required: true, message: '请输入工作职位' }]}>
                 <Input placeholder='例如: 初级前端开发工程师' />
+              </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <BranchesOutlined className={styles.portNumberIcon} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.portNumber}>端口号</span>
+                  <span className={styles.annotation}>
+                    端口号报错换一个就行
+                  </span>
+                </div>
+              </div>
+              <Form.Item
+                name='portNumber'
+                className={styles.inputContainer}
+                rules={[{ required: true, message: '请输入端口号' }]}>
+                <Input placeholder='例如: 5123' />
               </Form.Item>
             </div>
 
