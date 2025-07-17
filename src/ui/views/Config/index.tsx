@@ -192,7 +192,7 @@ const Config = () => {
                 <div className={styles.labelContainer_text}>
                   <span className={styles.portNumber}>端口号</span>
                   <span className={styles.annotation}>
-                    端口号报错换一个就行
+                    方便调试,本地每次改两个地方太麻烦了
                   </span>
                 </div>
               </div>
