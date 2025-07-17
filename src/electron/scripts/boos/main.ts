@@ -28,10 +28,13 @@ export async function runBossAutoDeliver(config: Config) {
     logger.info(`${checkLogin ? '已登录' : '未登录'}`)
 
     if (!checkLogin) {
+      logger.info('开始自动登录')
       await autoLogin(page, config)
     }
 
+    logger.info('开始选择城市')
     await selectCity(page, config)
+    logger.info('自动遍历并与所有职位卡片进行沟通')
     await clickAllJobsAndCommunicate(page)
   } catch (err) {
     logger.error('主流程发生异常: ' + (err as Error).message)

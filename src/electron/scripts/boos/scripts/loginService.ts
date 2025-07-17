@@ -1,4 +1,3 @@
-import { app } from 'electron'
 import { Page } from 'puppeteer-core'
 import inquirer from 'inquirer'
 
@@ -21,7 +20,6 @@ export async function isLoggedIn(page: Page): Promise<boolean> {
     return false
   } catch (err) {
     logger.info('未找到登录按钮: ' + (err as Error).message)
-    app.exit(1)
     return true
   }
 }
