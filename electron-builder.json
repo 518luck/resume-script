@@ -10,7 +10,6 @@
     "category": "Utility"
   },
   "win": {
-    "target": ["portable", "msi"],
-    "language": "zh-CN"
+    "target": ["portable", "msi"]
   }
 }
