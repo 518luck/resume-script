@@ -20,12 +20,14 @@ interface ElectronAPI {
   loadConfig: () => Promise<Config>
   // 暴露配置文件路径
   getConfigPath: () => Promise<string>
+  // 获取日志文件路径
+  getLogPath: () => Promise<string>
+  // 暴露浏览器用户数据目录
+  getBrowserUserDataDir: () => Promise<string>
   // 监听日志更新
   onLogUpdated: (callback: (data: string) => void) => void
   // 获取日志内容
   getLogContent: () => Promise<string>
-  // 获取日志文件路径
-  getLogPath: () => Promise<string>
   // 清除日志
   clearLogs: () => Promise<void>
 }

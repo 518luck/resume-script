@@ -26,6 +26,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 暴露配置文件路径
   getConfigPath: () => ipcRenderer.invoke('get-config-path'),
 
+  // 暴露浏览器用户数据目录
+  getBrowserUserDataDir: () => ipcRenderer.invoke('get-browser-user-data-dir'),
+
+  // 获取日志文件路径
+  getLogPath: () => ipcRenderer.invoke('get-log-path'),
+
   // 监听日志更新
   onLogUpdated: (callback: (data: string) => void) => {
     ipcRenderer.on('log-updated', (event: IpcRendererEvent, data: string) =>
@@ -35,9 +41,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 获取日志内容
   getLogContent: () => ipcRenderer.invoke('get-log-content'),
-
-  // 获取日志文件路径
-  getLogPath: () => ipcRenderer.invoke('get-log-path'),
 
   // 清除日志
   clearLogs: () => ipcRenderer.invoke('clear-logs'),

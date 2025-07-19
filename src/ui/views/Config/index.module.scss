@@ -200,3 +200,18 @@
   );
   @extend .text_label_general;
 }
+
+.iconBrowser {
+  color: #231557;
+  font-size: 15px;
+}
+.labelBrowser {
+  background-image: linear-gradient(
+    -225deg,
+    #8b72e7 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  @extend .text_label_general;
+}

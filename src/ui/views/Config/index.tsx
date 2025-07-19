@@ -9,6 +9,7 @@ import {
   TruckOutlined,
   FormOutlined,
   BranchesOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 
 import styles from './index.module.scss'
@@ -16,6 +17,7 @@ import styles from './index.module.scss'
 const Config = () => {
   const [form] = Form.useForm()
   const [configPath, setConfigPath] = useState<string>('')
+  const [browserUserDataDir, setBrowserUserDataDir] = useState<string>('')
 
   const cityOptions = [
     { label: '深圳', value: '深圳' },
@@ -51,6 +53,15 @@ const Config = () => {
       }
     }
     getConfigPath()
+  })
+
+  useEffect(() => {
+    const getBrowserUserDataDir = async () => {
+      const browserUserDataDir =
+        await window.electronAPI.getBrowserUserDataDir()
+      setBrowserUserDataDir(browserUserDataDir)
+    }
+    getBrowserUserDataDir()
   })
 
   const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
@@ -107,39 +118,6 @@ const Config = () => {
                   },
                 ]}>
                 <Input placeholder='请输入手机号' />
-              </Form.Item>
-            </div>
-
-            <div className={styles.inputRow}>
-              <div className={styles.labelContainer}>
-                <CopyOutlined className={styles.iconPath} />
-                <div className={styles.labelContainer_text}>
-                  <span className={styles.labelPath}>配置文件路径</span>
-                  <span className={styles.annotation}>
-                    用来保存配置文件的信息
-                  </span>
-                </div>
-              </div>
-              <Tooltip title={configPath} placement='top'>
-                <span className={styles.right_container_text}>
-                  {configPath}
-                </span>
-              </Tooltip>
-            </div>
-
-            <div className={styles.inputRow} style={{ marginTop: '20px' }}>
-              <div className={styles.labelContainer}>
-                <DesktopOutlined className={styles.iconAcephalous} />
-                <div className={styles.labelContainer_text}>
-                  <span className={styles.labelAcephalous}>无头模式</span>
-                  <span className={styles.annotation}>
-                    浏览器在无头模式下运行，不会打开浏览器窗口
-                  </span>
-                </div>
-              </div>
-
-              <Form.Item name='isHeadless'>
-                <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
               </Form.Item>
             </div>
 
@@ -202,6 +180,58 @@ const Config = () => {
                 rules={[{ required: true, message: '请输入端口号' }]}>
                 <Input placeholder='例如: 5123' />
               </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <DesktopOutlined className={styles.iconAcephalous} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelAcephalous}>无头模式</span>
+                  <span className={styles.annotation}>
+                    浏览器在无头模式下运行，不会打开浏览器窗口
+                  </span>
+                </div>
+              </div>
+
+              <Form.Item name='isHeadless'>
+                <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
+              </Form.Item>
+            </div>
+
+            <div className={styles.inputRow}>
+              <div className={styles.labelContainer}>
+                <CopyOutlined className={styles.iconPath} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelPath}>配置文件路径</span>
+                  <span className={styles.annotation}>
+                    用来保存配置文件的信息
+                  </span>
+                </div>
+              </div>
+              <Tooltip title={configPath} placement='top'>
+                <span className={styles.right_container_text}>
+                  {configPath}
+                </span>
+              </Tooltip>
+            </div>
+
+            <div className={styles.inputRow} style={{ marginTop: '20px' }}>
+              <div className={styles.labelContainer}>
+                <UserOutlined className={styles.iconBrowser} />
+                <div className={styles.labelContainer_text}>
+                  <span className={styles.labelBrowser}>
+                    浏览器用户数据目录
+                  </span>
+                  <span className={styles.annotation}>
+                    用来保存浏览器用户数据
+                  </span>
+                </div>
+              </div>
+              <Tooltip title={browserUserDataDir} placement='top'>
+                <span className={styles.right_container_text}>
+                  {browserUserDataDir}
+                </span>
+              </Tooltip>
             </div>
 
             <Form.Item>

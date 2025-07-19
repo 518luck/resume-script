@@ -1,7 +1,13 @@
 import { ipcMain } from 'electron'
 import * as fs from 'fs'
 import { runBossAutoDeliver } from '../scripts/boos/main.js'
-import { clearLogs, logger, configPath, logPath } from '../utils/index.js'
+import {
+  clearLogs,
+  logger,
+  configPath,
+  logPath,
+  userDataDir,
+} from '../utils/index.js'
 import { loadConfig, saveConfig } from './index.js'
 
 /**
@@ -49,14 +55,6 @@ export class IpcManager {
     })
 
     /**
-     * 注册暴露配置文件路径的 IPC 事件
-     * @private
-     */
-    ipcMain.handle('get-config-path', async () => {
-      return configPath
-    })
-
-    /**
      * 注册获取日志内容的 IPC 事件
      * @private
      */
@@ -75,6 +73,22 @@ export class IpcManager {
      */
     ipcMain.handle('get-log-path', async () => {
       return logPath
+    })
+
+    /**
+     * 注册暴露配置文件路径的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('get-config-path', async () => {
+      return configPath
+    })
+
+    /**
+     * 注册暴露浏览器用户数据目录的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('get-browser-user-data-dir', async () => {
+      return userDataDir
     })
 
     /**

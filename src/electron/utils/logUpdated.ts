@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from 'electron'
 import * as fs from 'fs'
 import path from 'path'
-import logger from './logger'
+
+import logger from './logger.js'
 
 /**
  * 日志文件路径，统一存储于 Electron 用户数据目录下的 logs/app.log。
