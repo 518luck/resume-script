@@ -1,7 +1,7 @@
 // src/electron/services/AppManager.ts
 import { WindowManager, IpcManager } from './index.js'
 import { loadConfig, loadPage } from './index.js'
-import { logUpdated } from '../utils/index.js'
+import { logger, logUpdated } from '../utils/index.js'
 
 export class AppManager {
   private windowManager: WindowManager
@@ -14,9 +14,12 @@ export class AppManager {
   async initialize() {
     // 创建窗口
     const mainWindow = this.windowManager.createWindow()
+    logger.info('窗口创建完成')
 
     // 加载页面
+
     const config = await loadConfig()
+
     loadPage(mainWindow, config)
     // 监听日志更新
     logUpdated(mainWindow)

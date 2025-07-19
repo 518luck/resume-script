@@ -16,7 +16,7 @@ import { Config } from '../../../../types/electron.js'
 export async function isLoggedIn(page: Page): Promise<boolean> {
   try {
     await page.waitForSelector('a[ka="header-login"]', { timeout: 10000 })
-    logger.info('找到登录按钮')
+    logger.info('寻找登录按钮')
     return false
   } catch (err) {
     logger.info('未找到登录按钮: ' + (err as Error).message)

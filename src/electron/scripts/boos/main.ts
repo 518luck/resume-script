@@ -1,4 +1,4 @@
-import { launchBrowser } from './utils/browser.js'
+import { launchBrowser } from './scripts/browser.js'
 import logger from '../../utils/logger.js'
 import { isLoggedIn, autoLogin } from './scripts/loginService.js'
 import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin.js'

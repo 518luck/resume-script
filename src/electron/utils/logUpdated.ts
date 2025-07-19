@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import * as fs from 'fs'
 import path from 'path'
+import logger from './logger'
 
 /**
  * 日志文件路径，统一存储于 Electron 用户数据目录下的 logs/app.log。
@@ -18,6 +19,7 @@ const logPath = path.join(app.getPath('userData'), 'logs/app.log')
  * 适用于实时日志面板、终端输出等场景。
  */
 export function watchLogFile(win: BrowserWindow) {
+  logger.info('监听日志文件')
   let lastSize = 0
   fs.watchFile(logPath, { interval: 1000 }, (curr) => {
     if (curr.size > lastSize) {

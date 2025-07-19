@@ -10,3 +10,8 @@ export const configPath = path.join(
 // 日志文件路径
 export const logPath = path.join(app.getPath('userData'), 'logs/app.log')
 
+// 浏览器用户数据目录
+export const userDataDir = path.join(
+  app.getPath('userData'),
+  'browser-userData'
+)

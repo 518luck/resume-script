@@ -29,9 +29,11 @@ import { Config } from '../../types/electron.js'
  */
 export const loadPage = (win: BrowserWindow, config: Config) => {
   if (isDev()) {
+    logger.info('开发环境')
     const portNumber = config.portNumber || 5123
     win.loadURL(`http://localhost:${portNumber}`)
   } else {
+    logger.info('生产环境')
     const htmlPath = path.join(app.getAppPath(), 'dist-reract', 'index.html')
     win.loadFile(htmlPath)
   }
@@ -56,6 +58,7 @@ export const loadPage = (win: BrowserWindow, config: Config) => {
  */
 export const loadConfig = () => {
   try {
+    logger.info('读取配置文件')
     if (fs.existsSync(configPath)) {
       const data = fs.readFileSync(configPath, 'utf8')
       return JSON.parse(data)
