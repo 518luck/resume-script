@@ -1,0 +1,88 @@
+import { ipcMain } from 'electron'
+import * as fs from 'fs'
+import { runBossAutoDeliver } from '../scripts/boos/main.js'
+import { clearLogs, logger, configPath, logPath } from '../utils/index.js'
+import { loadConfig, saveConfig } from './index.js'
+
+/**
+ * IPC 管理器
+ *
+ * 负责处理主进程与渲染进程之间的通信。
+ * 提供自动投递、配置读写、日志操作等 IPC 事件处理。
+ *
+ * @class IpcManager
+ * @example
+ * const ipcManager = new IpcManager()
+ * ipcManager.setupIpcHandlers()
+ */
+export class IpcManager {
+  constructor() {
+    this.setupIpcHandlers()
+  }
+  private setupIpcHandlers() {
+    /**
+     * 注册自动投递的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('run-boss-auto-deliver', async () => {
+      const currentConfig = await loadConfig()
+      await runBossAutoDeliver(currentConfig)
+      return '自动投递完成'
+    })
+
+    /**
+     * 注册保存配置的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('save-config', async (event, config) => {
+      const result = saveConfig(config)
+      logger.info(`保存地址: ${configPath}`)
+      return result
+    })
+
+    /**
+     * 注册读取配置的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('load-config', async () => {
+      return loadConfig()
+    })
+
+    /**
+     * 注册暴露配置文件路径的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('get-config-path', async () => {
+      return configPath
+    })
+
+    /**
+     * 注册获取日志内容的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('get-log-content', async () => {
+      try {
+        return await fs.promises.readFile(logPath, 'utf-8')
+      } catch (e) {
+        console.error('读取日志文件失败:', e)
+        return '读取日志文件失败'
+      }
+    })
+
+    /**
+     * 注册获取日志文件路径的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('get-log-path', async () => {
+      return logPath
+    })
+
+    /**
+     * 注册清除日志的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('clear-logs', async () => {
+      clearLogs(logPath)
+    })
+  }
+}
