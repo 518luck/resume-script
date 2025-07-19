@@ -1,4 +1,4 @@
-declare global {
+/* declare global {
   interface Window {
     electronAPI: {
       closeWindow: () => void
@@ -9,3 +9,4 @@ declare global {
     }
   }
 }
+ */

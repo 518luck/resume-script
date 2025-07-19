@@ -19,6 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 保存配置
   saveConfig: (config: Config) => ipcRenderer.invoke('save-config', config),
+
   // 读取配置
   loadConfig: () => ipcRenderer.invoke('load-config'),
 

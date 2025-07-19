@@ -8,7 +8,6 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "moduleDetection": "force",
     "lib": ["ESNext", "DOM"]
   },
   "include": ["./**/*.ts"],

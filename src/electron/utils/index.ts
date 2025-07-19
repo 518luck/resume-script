@@ -5,3 +5,5 @@ export { watchLogFile as logUpdated } from './logUpdated.js'
 export { clearLogs } from './clearLogs.js'
 
 export { isDev } from './isDev.js'
+
+export * from './path.js'

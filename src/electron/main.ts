@@ -1,81 +1,36 @@
 import { app, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
-import * as path from 'path'
 import * as fs from 'fs'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { runBossAutoDeliver } from './scripts/boos/main.js'
-import { clearLogs, logger, logUpdated, isDev } from './utils/index.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import { runBossAutoDeliver } from './scripts/boos/main.js'
+import {
+  clearLogs,
+  logger,
+  logUpdated,
+  isDev,
+  configPath,
+  logPath,
+} from './utils/index.js'
+import {
+  loadConfig,
+  saveConfig,
+  loadPage,
+  createWindow,
+} from './services/index.js'
 
 // 开发环境禁用安全警告, 生产环境不使用(记得删除)
 if (isDev()) {
   process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 }
 
-export interface Config {
-  phone?: string
-  city?: string
-  job?: string
-  [key: string]: unknown
-}
-
-// 配置文件路径
-const configPath = path.join(app.getPath('userData'), 'duoyunARConfig.json')
-// 日志文件路径
-const logPath = path.join(app.getPath('userData'), 'logs/app.log')
-// 读取配置
-const loadConfig = () => {
-  try {
-    if (fs.existsSync(configPath)) {
-      const data = fs.readFileSync(configPath, 'utf8')
-      return JSON.parse(data)
-    }
-  } catch (error) {
-    logger.error('读取配置失败', error)
-  }
-  return {}
-}
-const config = loadConfig()
-// 保存配置
-const saveConfig = (config: Config) => {
-  try {
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
-    return true
-  } catch (error) {
-    logger.error('保存配置失败', error)
-    return false
-  }
-}
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    frame: false, // 关闭原生标题栏
-    titleBarStyle: 'hidden', // 可选，macOS 下更好看
-    icon: path.join(__dirname, 'duoyunico.ico'),
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false,
-    },
-  })
-
-  if (isDev()) {
-    win.loadURL(`http://localhost:${config.portNumber}`)
-    logger.info(`端口号为:${config.portNumber}`)
-  } else {
-    const htmlPath = path.join(app.getAppPath(), 'dist-reract', 'index.html')
-    win.loadFile(htmlPath)
-  }
-  return win
-}
-
 app.whenReady().then(() => {
   // 创建窗口
   const win = createWindow()
+
+  const config = loadConfig()
+
+  // 加载页面
+  loadPage(win, config)
+  // 监听日志更新
   logUpdated(win)
 
   // 隐藏菜单栏
