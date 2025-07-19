@@ -1,5 +1,6 @@
 {
-  "appId": "com.duoyun.resume-sender",
+  "appId": "com.duoyun.AR",
+  "productName": "AR",
   "files": ["dist-electron", "dist-reract"],
   "icon": "src/ui/assets/duoyunico.ico",
   "mac": {

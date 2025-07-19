@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createHashRouter, Navigate } from 'react-router-dom'
 import { Suspense } from 'react'
 import React from 'react'
 
@@ -10,7 +10,7 @@ const Nowcoder = React.lazy(() => import('../views/Nowcoder'))
 const AboutUs = React.lazy(() => import('../views/AboutUs'))
 const Log = React.lazy(() => import('../views/Log'))
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,

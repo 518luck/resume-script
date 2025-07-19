@@ -3,9 +3,8 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { isDev } from './util.js'
 import { runBossAutoDeliver } from './scripts/boos/main.js'
-import { clearLogs, logger, logUpdated } from './utils/index.js'
+import { clearLogs, logger, logUpdated, isDev } from './utils/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -68,7 +67,8 @@ const createWindow = () => {
     win.loadURL(`http://localhost:${config.portNumber}`)
     logger.info(`端口号为:${config.portNumber}`)
   } else {
-    win.loadFile(path.join(app.getAppPath(), 'dist-reract/index.html'))
+    const htmlPath = path.join(app.getAppPath(), 'dist-reract', 'index.html')
+    win.loadFile(htmlPath)
   }
   return win
 }
