@@ -1,14 +1,9 @@
 import { app, BrowserWindow } from 'electron'
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
 
 import { configPath, isDev, logger } from '../utils/index.js'
 import { Config } from '../../types/electron.js'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 /**
  * 根据环境加载页面到指定窗口
@@ -40,38 +35,6 @@ export const loadPage = (win: BrowserWindow, config: Config) => {
     const htmlPath = path.join(app.getAppPath(), 'dist-reract', 'index.html')
     win.loadFile(htmlPath)
   }
-}
-
-/**
- * 创建主应用窗口
- *
- * 创建一个无边框的 Electron 窗口，配置窗口大小、图标、
- * 预加载脚本等属性。窗口创建后需要调用 loadPage 加载页面。
- *
- * @returns {BrowserWindow} 创建的窗口实例
- *
- * @example
- * const win = createWindow()
- * loadPage(win, config)
- *
- * @since 1.0.0
- */
-export const createWindow = () => {
-  console.log('__dirname', path.join(__dirname, '..'))
-
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    frame: false, // 关闭原生标题栏
-    titleBarStyle: 'hidden', // 可选，macOS 下更好看
-    icon: path.join(__dirname, 'duoyunico.ico'),
-    webPreferences: {
-      preload: path.join(__dirname, '..', 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false,
-    },
-  })
-  return win
 }
 
 /**

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
+import { app, ipcMain } from 'electron'
 import * as fs from 'fs'
 
 import { runBossAutoDeliver } from './scripts/boos/main.js'
@@ -14,7 +14,7 @@ import {
   loadConfig,
   saveConfig,
   loadPage,
-  createWindow,
+  WindowManager,
 } from './services/index.js'
 
 // 开发环境禁用安全警告, 生产环境不使用(记得删除)
@@ -22,63 +22,21 @@ if (isDev()) {
   process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // 创建窗口
-  const win = createWindow()
-
-  const config = loadConfig()
+  const windowManager = new WindowManager()
+  const mainWindow = windowManager.createWindow()
 
   // 加载页面
-  loadPage(win, config)
+  const config = await loadConfig()
+  loadPage(mainWindow, config)
   // 监听日志更新
-  logUpdated(win)
-
-  // 隐藏菜单栏
-  Menu.setApplicationMenu(null)
-
-  // 打开开发者工具
-  globalShortcut.register('CommandOrControl+Shift+I', () => {
-    const focusedWindow = BrowserWindow.getFocusedWindow()
-    if (focusedWindow) {
-      focusedWindow.webContents.toggleDevTools()
-    }
-  })
-
-  // 窗口最小化
-  ipcMain.on('window-minimize', () => {
-    BrowserWindow.getFocusedWindow()?.minimize()
-  })
-  // 窗口最大化
-  ipcMain.on('window-maximize', () => {
-    const win = BrowserWindow.getFocusedWindow()
-    if (win?.isMaximized()) {
-      win.unmaximize()
-    } else {
-      win?.maximize()
-    }
-  })
-  // 窗口关闭
-  ipcMain.on('window-close', () => {
-    BrowserWindow.getFocusedWindow()?.close()
-  })
-
-  // 窗口关闭macOS下不退出
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-  })
-
-  // 窗口激活macOS下不退出
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
+  logUpdated(mainWindow)
 
   // 自动投递
   ipcMain.handle('run-boss-auto-deliver', async () => {
-    await runBossAutoDeliver(config)
+    const currentConfig = await loadConfig()
+    await runBossAutoDeliver(currentConfig)
     return '自动投递完成'
   })
 
