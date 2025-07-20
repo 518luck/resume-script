@@ -22,6 +22,7 @@ import { loadConfig, saveConfig } from './index.js'
  * ipcManager.setupIpcHandlers()
  */
 export class IpcManager {
+  static isStopped = false
   constructor() {
     this.setupIpcHandlers()
   }
@@ -116,6 +117,14 @@ export class IpcManager {
         logger.error('打开文件夹失败:', e)
         return false
       }
+    })
+
+    /**
+     * 注册暂停自动投递的 IPC 事件
+     * @private
+     */
+    ipcMain.handle('stop-boss-auto-deliver', async () => {
+      IpcManager.isStopped = true
     })
   }
 }

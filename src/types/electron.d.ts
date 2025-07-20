@@ -32,6 +32,8 @@ interface ElectronAPI {
   clearLogs: () => Promise<void>
   // 打开文件夹
   openFolder: (folderPath: string) => Promise<boolean>
+  // 暂停自动投递
+  stopBossAutoDeliver: () => Promise<void>
 }
 
 declare global {

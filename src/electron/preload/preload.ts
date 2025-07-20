@@ -48,4 +48,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 打开文件夹
   openFolder: (folderPath: string) =>
     ipcRenderer.invoke('open-folder', folderPath),
+
+  // 暂停自动投递
+  stopBossAutoDeliver: () => ipcRenderer.invoke('stop-boss-auto-deliver'),
 })

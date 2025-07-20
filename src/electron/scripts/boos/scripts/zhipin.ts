@@ -1,6 +1,7 @@
 import { Page, ElementHandle } from 'puppeteer-core'
 import { logger, randomDelay } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
+import { IpcManager } from '../../../services/index.js'
 /**
  * 自动选择城市并搜索职位
  *
@@ -99,6 +100,10 @@ export async function clickAllJobsAndCommunicate(page: Page) {
     }
 
     for (let i = lastJobCount; i < currentJobCount; i++) {
+      if (IpcManager.isStopped) {
+        logger.info('暂停自动投递')
+        return
+      }
       await handleJobBox(jobBoxes[i], page)
     }
 

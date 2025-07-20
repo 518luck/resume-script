@@ -71,9 +71,17 @@
     width: 100%;
     background-color: #1b1e24;
     border-radius: 10px;
-
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
+
+    .footer_top {
+      :global(.ant-select-selector) {
+        background-color: #2a2d35 !important; // 背景颜色
+        border: 1px solid #3a3d45 !important;
+        color: #fff !important;
+        transition: all 0.3s ease !important;
+      }
+    }
   }
   .footer::-webkit-scrollbar {
     display: none; /* Chrome/Safari/Edge */
