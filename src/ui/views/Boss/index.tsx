@@ -18,9 +18,13 @@ const Boss = () => {
 
   const handleRunBossAutoDeliverOnClick = async () => {
     const result = await checkRequiredConfig(navigate)
-    console.log(result)
-
-    // await window.electronAPI.runBossAutoDeliver()
+    try {
+      if (result) {
+        await window.electronAPI.runBossAutoDeliver()
+      }
+    } catch (error) {
+      console.error('自动投递失败:', error)
+    }
   }
 
   return (

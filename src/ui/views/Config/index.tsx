@@ -250,9 +250,9 @@ const Config = () => {
               <div className={styles.labelContainer}>
                 <DesktopOutlined className={styles.iconAcephalous} />
                 <div className={styles.labelContainer_text}>
-                  <span className={styles.labelAcephalous}>有头模式</span>
+                  <span className={styles.labelAcephalous}>无头模式</span>
                   <span className={styles.annotation}>
-                    可以理解为是否会打开浏览器窗口
+                    可以理解为是否会打开浏览器窗口,默认是打开的
                   </span>
                 </div>
               </div>
@@ -307,12 +307,6 @@ const Config = () => {
                 </span>
               </Tooltip>
             </div>
-
-            <Form.Item>
-              <Button type='primary' htmlType='submit'>
-                保存配置
-              </Button>
-            </Form.Item>
           </Form>
         </div>
       </section>

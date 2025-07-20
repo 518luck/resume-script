@@ -15,7 +15,6 @@ const Log = () => {
     })
     // 再监听增量推送
     window.electronAPI.onLogUpdated((newLog) => {
-      console.log('收到新日志:', newLog)
       setLogs((old) => old + newLog)
     })
     // 获取日志目录
