@@ -28,6 +28,14 @@ const Log = () => {
     window.electronAPI.openFolder(logPath)
   }
 
+  const handleClearLogsOnClick = async () => {
+    setLogs('')
+    await window.electronAPI.clearLogs()
+    window.electronAPI.getLogContent().then((content) => {
+      setLogs(content)
+    })
+  }
+
   return (
     <div className={styles.log}>
       <header>
@@ -50,7 +58,11 @@ const Log = () => {
             onClick={handleLogPathClick}>
             打开日志
           </Button>
-          <Button ghost className={styles.header_Bt_clear} size='small'>
+          <Button
+            ghost
+            className={styles.header_Bt_clear}
+            size='small'
+            onClick={handleClearLogsOnClick}>
             清空日志
           </Button>
         </div>
