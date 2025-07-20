@@ -67,6 +67,8 @@ const Config = () => {
   const handleConfigPathOnClick = async () => {
     try {
       const dirExists = await window.electronAPI.openFolder(configPath)
+      console.log(dirExists)
+
       if (!dirExists) {
         message.error('配置文件未创建,请先填写配置')
       }

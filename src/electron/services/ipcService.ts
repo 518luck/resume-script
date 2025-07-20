@@ -1,6 +1,5 @@
 import { ipcMain, shell } from 'electron'
 import * as fs from 'fs'
-import * as path from 'path'
 import { runBossAutoDeliver } from '../scripts/boos/main.js'
 import {
   clearLogs,
@@ -106,8 +105,7 @@ export class IpcManager {
      */
     ipcMain.handle('open-folder', async (event, folderPath: string) => {
       try {
-        const dir = path.dirname(folderPath)
-        if (!fs.existsSync(dir)) {
+        if (fs.existsSync(folderPath)) {
           await shell.openPath(folderPath)
           return true
         } else {
