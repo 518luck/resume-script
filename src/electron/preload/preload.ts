@@ -44,4 +44,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 清除日志
   clearLogs: () => ipcRenderer.invoke('clear-logs'),
+
+  // 打开文件夹
+  openFolder: (folderPath: string) =>
+    ipcRenderer.invoke('open-folder', folderPath),
 })

@@ -30,6 +30,8 @@ interface ElectronAPI {
   getLogContent: () => Promise<string>
   // 清除日志
   clearLogs: () => Promise<void>
+  // 打开文件夹
+  openFolder: (folderPath: string) => Promise<boolean>
 }
 
 declare global {

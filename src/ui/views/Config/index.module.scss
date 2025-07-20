@@ -40,6 +40,21 @@
       padding: 20px;
       max-height: 80vh;
       overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background: linear-gradient(220.55deg, #1c1815 0%, #46425a 100%);
+        border-radius: 50px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #144054 0%, #14493a 100%);
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+          background: linear-gradient(180deg, #2a9dd3 0%, #23daa6 100%);
+        }
+      }
       .inputRow {
         display: flex;
         justify-content: space-between;

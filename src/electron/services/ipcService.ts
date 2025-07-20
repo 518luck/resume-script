@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { ipcMain, shell } from 'electron'
 import * as fs from 'fs'
 import { runBossAutoDeliver } from '../scripts/boos/main.js'
 import {
@@ -97,6 +97,16 @@ export class IpcManager {
      */
     ipcMain.handle('clear-logs', async () => {
       clearLogs(logPath)
+    })
+
+    ipcMain.handle('open-folder', async (event, folderPath: string) => {
+      try {
+        await shell.openPath(folderPath)
+        return true
+      } catch (e) {
+        logger.error('打开文件夹失败:', e)
+        return false
+      }
     })
   }
 }
