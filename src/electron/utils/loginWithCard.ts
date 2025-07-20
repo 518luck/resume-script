@@ -76,9 +76,10 @@ export async function waitForUserToSolveCaptcha(page: Page) {
         }
       }, 1000)
     })
-
+    logger.info('等待页面跳转')
     // 等待页面跳转
     const currentUrl = page.url()
+    logger.info('当前URL:', currentUrl)
     await page.waitForFunction(() => window.location.href !== currentUrl, {
       timeout: 300000,
     })

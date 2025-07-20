@@ -1,5 +1,5 @@
 import { Page, ElementHandle } from 'puppeteer-core'
-import { logger } from '../../../utils/index.js'
+import { logger, randomDelay } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
 
 /**
@@ -39,6 +39,8 @@ export async function selectCity(page: Page, config: Config) {
     return
   }
 
+  await randomDelay(500, 1500)
+
   await page.type("input[class='city-current']", city, {
     delay: Math.random() * 150 + 50,
   })
@@ -49,6 +51,7 @@ export async function selectCity(page: Page, config: Config) {
   const element = await page.$(`li[data-name="${city}"]`)
   if (element) {
     await element.click()
+    await randomDelay(500, 1500)
     logger.info(`点击了城市: ${city}`)
   } else {
     logger.error(`完犊子了，没找到城市: ${city}`)
@@ -101,7 +104,7 @@ export async function clickAllJobsAndCommunicate(page: Page) {
       await handleJobBox(jobBoxes[i], page)
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await randomDelay(500, 1500)
     await scrollAndWaitForNewJobs(page)
     lastJobCount = currentJobCount
   }
@@ -141,18 +144,18 @@ async function handleJobBox(jobBox: ElementHandle, page: Page) {
     const bossOnlineIcon = await jobBox.$('.boss-online-icon')
     if (bossOnlineIcon) {
       logger.info('boss在线,准备开始沟通')
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await randomDelay(500, 1500)
       logger.info('点击职位卡片')
       await jobBox.click()
 
       logger.info('等待立即沟通按钮出现')
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await randomDelay(500, 1500)
       await page.waitForSelector('a.op-btn.op-btn-chat', { timeout: 10000 })
       await page.click('a.op-btn.op-btn-chat')
       logger.info('点击沟通按钮')
 
       logger.info('等待沟通弹窗')
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await randomDelay(500, 1500)
       await page.waitForSelector('a.default-btn.cancel-btn', {
         timeout: 10000,
       })

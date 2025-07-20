@@ -9,3 +9,5 @@ export { isDev } from './isDev.js'
 export * from './path.js'
 
 export { waitForUserToSolveCaptcha } from './loginWithCard.js'
+
+export { randomDelay } from './randomDelay.js'
