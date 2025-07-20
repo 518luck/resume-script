@@ -68,31 +68,27 @@ export async function autoLogin(page: Page, config: Config) {
     return
   }
 
-  await page.waitForSelector('div[class="yidun_intelli-tips"]', {
-    visible: true,
-    timeout: 10000,
-  })
-
-  const yidunIntelliTips = await page.$('div[class="yidun_intelli-tips"]')
-  if (yidunIntelliTips) {
-    logger.info('点击了滑动验证码')
-    await yidunIntelliTips.click()
-  } else {
-    logger.error('完犊子了，没找到滑动验证码')
+  try {
+    logger.info('等待验证按钮出现')
+    await page.waitForSelector('div[aria-label="点击按钮进行验证"]', {
+      visible: true,
+      timeout: 5000,
+    })
+  } catch (err) {
+    logger.error('没找到验证按钮' + (err as Error).message)
     return
   }
 
-  /*   await page.waitForSelector('.geetest_radar_tip', { timeout: 15000 })
-  logger.info('滑动验证码出现')
-
-  const geetestRadarTip = await page.$('.geetest_radar_tip')
-  if (geetestRadarTip) {
-    await geetestRadarTip.click()
-    logger.info('点击了滑动验证码')
+  const buttonLocator = await page.$('div[aria-label="点击按钮进行验证"]')
+  if (buttonLocator) {
+    logger.info('找到验证按钮，准备点击')
+    await buttonLocator.click()
   } else {
-    logger.error('完犊子了，没找到滑动验证码')
+    logger.error('没找到验证按钮')
     return
-  } */
+  }
+
+  logger.info('出现滑块验证')
 
   await page.waitForSelector('.geetest_panel', { hidden: true, timeout: 60000 })
   logger.info('滑块验证已通过')
