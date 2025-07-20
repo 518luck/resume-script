@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { FormProps } from 'antd'
 import { Form, Input, message, Button, Tooltip, Switch, Select } from 'antd'
 import {
@@ -11,7 +11,9 @@ import {
   BranchesOutlined,
   UserOutlined,
 } from '@ant-design/icons'
+import { debounce } from 'lodash'
 
+import type { Config } from '../../../types/electron'
 import styles from './index.module.scss'
 
 const Config = () => {
@@ -77,7 +79,8 @@ const Config = () => {
     }
   }
 
-  const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
+  // 保存配置
+  /*  const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
     try {
       const success = await window.electronAPI.saveConfig(values)
       if (success) {
@@ -89,10 +92,41 @@ const Config = () => {
       console.error('保存配置失败:', error)
       message.error('保存失败')
     }
-  }
+  } */
 
-  const handleIsHeadlessOnChange = (checked: boolean) => {
-    console.log(checked)
+  const handleSaveConfigOnFinish: FormProps['onFinish'] = useMemo(
+    () =>
+      debounce(async (values) => {
+        try {
+          const success = await window.electronAPI.saveConfig(values)
+          if (success) {
+            message.success('配置保存成功')
+          } else {
+            message.error('配置保存失败')
+          }
+        } catch (error) {
+          console.error('保存配置失败:', error)
+          message.error('保存失败')
+        }
+      }, 1000),
+    []
+  )
+
+  const handleInputOnchange = async (
+    fieldName: keyof Config,
+    value: string | number | boolean
+  ) => {
+    form.setFieldsValue({ [fieldName]: value })
+
+    const currentValues = form.getFieldsValue()
+    const newValues = { ...currentValues, [fieldName]: value }
+    try {
+      await form.validateFields()
+
+      handleSaveConfigOnFinish(newValues)
+    } catch (error) {
+      console.error('表单校验失败:', error)
+    }
   }
 
   return (
@@ -109,7 +143,7 @@ const Config = () => {
         </div>
 
         <div className={styles.content}>
-          <Form form={form} onFinish={handleSaveConfigOnFinish}>
+          <Form form={form}>
             {/* 手机号 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
@@ -131,7 +165,10 @@ const Config = () => {
                     message: '请输入正确的手机号格式',
                   },
                 ]}>
-                <Input placeholder='请输入手机号' />
+                <Input
+                  placeholder='请输入手机号'
+                  onChange={(e) => handleInputOnchange('phone', e.target.value)}
+                />
               </Form.Item>
             </div>
 
@@ -157,6 +194,7 @@ const Config = () => {
                   }
                   options={cityOptions}
                   className={styles.selectCitys}
+                  onChange={(value) => handleInputOnchange('city', value)}
                 />
               </Form.Item>
             </div>
@@ -176,7 +214,10 @@ const Config = () => {
                 name='job'
                 className={styles.inputContainer}
                 rules={[{ required: true, message: '请输入工作职位' }]}>
-                <Input placeholder='例如: 初级前端开发工程师' />
+                <Input
+                  placeholder='例如: 初级前端开发工程师'
+                  onChange={(e) => handleInputOnchange('job', e.target.value)}
+                />
               </Form.Item>
             </div>
 
@@ -195,7 +236,12 @@ const Config = () => {
                 name='portNumber'
                 className={styles.inputContainer}
                 rules={[{ required: true, message: '请输入端口号' }]}>
-                <Input placeholder='例如: 5123' />
+                <Input
+                  placeholder='例如: 5123'
+                  onChange={(e) =>
+                    handleInputOnchange('portNumber', e.target.value)
+                  }
+                />
               </Form.Item>
             </div>
 
@@ -204,15 +250,20 @@ const Config = () => {
               <div className={styles.labelContainer}>
                 <DesktopOutlined className={styles.iconAcephalous} />
                 <div className={styles.labelContainer_text}>
-                  <span className={styles.labelAcephalous}>无头模式</span>
+                  <span className={styles.labelAcephalous}>有头模式</span>
                   <span className={styles.annotation}>
-                    浏览器在无头模式下运行，不会打开浏览器窗口
+                    可以理解为是否会打开浏览器窗口
                   </span>
                 </div>
               </div>
 
               <Form.Item name='isHeadless'>
-                <Switch defaultChecked onChange={handleIsHeadlessOnChange} />
+                <Switch
+                  defaultChecked
+                  onChange={(checked) =>
+                    handleInputOnchange('isHeadless', checked)
+                  }
+                />
               </Form.Item>
             </div>
 
