@@ -1,7 +1,6 @@
 import { Page } from 'puppeteer-core'
-import inquirer from 'inquirer'
 
-import { logger } from '../../../utils/index.js'
+import { logger, waitForUserToSolveCaptcha } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
 
 /**
@@ -81,30 +80,12 @@ export async function autoLogin(page: Page, config: Config) {
 
   const buttonLocator = await page.$('div[aria-label="点击按钮进行验证"]')
   if (buttonLocator) {
-    logger.info('找到验证按钮，准备点击')
+    logger.info('找到验证按钮，点击验证')
     await buttonLocator.click()
   } else {
     logger.error('没找到验证按钮')
     return
   }
-
-  logger.info('出现滑块验证')
-
-  await page.waitForSelector('.geetest_panel', { hidden: true, timeout: 60000 })
-  logger.info('滑块验证已通过')
-
-  const { code } = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'code',
-      message: '请输入短信验证码：',
-    },
-  ])
-
-  await page.type('input[placeholder="短信验证码"]', code, {
-    delay: Math.random() * 150 + 50,
-  })
-  logger.info('短信验证码输入完成')
 
   const agreePolicy = await page.$('.agree-policy')
   if (agreePolicy) {
@@ -115,27 +96,9 @@ export async function autoLogin(page: Page, config: Config) {
     return
   }
 
-  const signupSubmitButton = await page.$(
-    'button[ka="signup_submit_button_click"]'
-  )
-  if (signupSubmitButton) {
-    await signupSubmitButton.click()
-    logger.info('点击了登录按钮')
-  } else {
-    logger.error('完犊子了，没找到登录按钮')
-    return
-  }
+  logger.info('出现滑块验证')
 
-  const dialogSur = await page.waitForSelector("span[ka='dialog_sure']", {
-    timeout: 10000,
-  })
-  if (dialogSur) {
-    await dialogSur.click()
-    logger.info('点击了同意按钮')
-  } else {
-    logger.error('完犊子了，没找到同意按钮')
-    return
-  }
+  await waitForUserToSolveCaptcha(page)
 
   logger.info('等待登录跳转...')
   await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 })
