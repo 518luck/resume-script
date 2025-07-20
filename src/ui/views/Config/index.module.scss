@@ -114,6 +114,18 @@
   }
 }
 
+.guideModal {
+  :global(.ant-modal-content) {
+    background-color: #1e2128;
+    color: #fff;
+  }
+
+  :global(.ant-modal-header) {
+    background-color: #1e2128;
+    color: #fff;
+  }
+}
+
 .text_label_general {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

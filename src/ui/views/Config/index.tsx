@@ -1,6 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FormProps } from 'antd'
-import { Form, Input, message, Button, Tooltip, Switch, Select } from 'antd'
+import {
+  Form,
+  Input,
+  message,
+  Button,
+  Tooltip,
+  Switch,
+  Select,
+  Modal,
+} from 'antd'
 import {
   PhoneOutlined,
   BugOutlined,
@@ -14,12 +23,14 @@ import {
 import { debounce } from 'lodash'
 
 import type { Config } from '../../../types/electron'
+import Guide from './components/guide'
 import styles from './index.module.scss'
 
 const Config = () => {
   const [form] = Form.useForm()
   const [configPath, setConfigPath] = useState<string>('')
   const [browserUserDataDir, setBrowserUserDataDir] = useState<string>('')
+  const [isGuideVisible, setIsGuideVisible] = useState<boolean>(false)
 
   const cityOptions = [
     { label: '深圳', value: '深圳' },
@@ -137,8 +148,11 @@ const Config = () => {
             <BugOutlined style={{ fontSize: '20px', color: '#ed701a' }} />
             <span>自动投递配置</span>
           </div>
-          <Button variant='solid' className={styles.header_Button}>
-            帮助
+          <Button
+            variant='solid'
+            className={styles.header_Button}
+            onClick={() => setIsGuideVisible(true)}>
+            新手指引
           </Button>
         </div>
 
@@ -310,6 +324,16 @@ const Config = () => {
           </Form>
         </div>
       </section>
+
+      <Modal
+        title={null}
+        closable={false}
+        open={isGuideVisible}
+        footer={null}
+        className={styles.guideModal}
+        onCancel={() => setIsGuideVisible(false)}>
+        <Guide />
+      </Modal>
     </div>
   )
 }
