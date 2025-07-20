@@ -58,6 +58,16 @@ export const loadPage = (win: BrowserWindow, config: Config) => {
  */
 export const loadConfig = () => {
   try {
+    if (!fs.existsSync(configPath)) {
+      logger.info('配置文件不存在，返回默认配置')
+      return {
+        phone: '',
+        job: '',
+        city: '深圳',
+        portNumber: '5123',
+        isHeadless: true,
+      }
+    }
     logger.info('读取配置文件')
     if (fs.existsSync(configPath)) {
       const data = fs.readFileSync(configPath, 'utf8')
@@ -97,9 +107,15 @@ export const loadConfig = () => {
  */
 export const saveConfig = (config: Config) => {
   try {
+    const dir = path.dirname(configPath)
+    if (!fs.existsSync(dir)) {
+      logger.info('文件不存在,创建配置文件目录')
+      fs.mkdirSync(dir, { recursive: true })
+    }
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
     return true
-  } catch {
+  } catch (error) {
+    logger.error('保存配置失败' + error)
     return false
   }
 }

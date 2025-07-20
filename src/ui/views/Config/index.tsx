@@ -64,6 +64,17 @@ const Config = () => {
     getBrowserUserDataDir()
   })
 
+  const handleConfigPathOnClick = async () => {
+    try {
+      const dirExists = await window.electronAPI.openFolder(configPath)
+      if (!dirExists) {
+        message.error('配置文件未创建,请先填写配置')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
     try {
       const success = await window.electronAPI.saveConfig(values)
@@ -97,6 +108,7 @@ const Config = () => {
 
         <div className={styles.content}>
           <Form form={form} onFinish={handleSaveConfigOnFinish}>
+            {/* 手机号 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <PhoneOutlined className={styles.iconPhone} />
@@ -121,6 +133,7 @@ const Config = () => {
               </Form.Item>
             </div>
 
+            {/* 择业城市 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <TruckOutlined className={styles.iconCity} />
@@ -146,6 +159,7 @@ const Config = () => {
               </Form.Item>
             </div>
 
+            {/* 工作职位 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <FormOutlined className={styles.iconJob} />
@@ -164,6 +178,7 @@ const Config = () => {
               </Form.Item>
             </div>
 
+            {/* 端口号 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <BranchesOutlined className={styles.portNumberIcon} />
@@ -182,6 +197,7 @@ const Config = () => {
               </Form.Item>
             </div>
 
+            {/* 无头模式 */}
             <div className={styles.inputRow}>
               <div className={styles.labelContainer}>
                 <DesktopOutlined className={styles.iconAcephalous} />
@@ -198,8 +214,12 @@ const Config = () => {
               </Form.Item>
             </div>
 
+            {/* 配置文件路径 */}
             <div className={styles.inputRow}>
-              <div className={styles.labelContainer}>
+              <div
+                className={styles.labelContainer}
+                style={{ cursor: 'pointer' }}
+                onClick={handleConfigPathOnClick}>
                 <CopyOutlined className={styles.iconPath} />
                 <div className={styles.labelContainer_text}>
                   <span className={styles.labelPath}>配置文件路径</span>
@@ -215,6 +235,7 @@ const Config = () => {
               </Tooltip>
             </div>
 
+            {/* 浏览器用户数据目录 */}
             <div className={styles.inputRow} style={{ marginTop: '20px' }}>
               <div className={styles.labelContainer}>
                 <UserOutlined className={styles.iconBrowser} />

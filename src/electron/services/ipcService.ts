@@ -1,5 +1,6 @@
 import { ipcMain, shell } from 'electron'
 import * as fs from 'fs'
+import * as path from 'path'
 import { runBossAutoDeliver } from '../scripts/boos/main.js'
 import {
   clearLogs,
@@ -99,10 +100,20 @@ export class IpcManager {
       clearLogs(logPath)
     })
 
+    /**
+     * 注册打开文件夹的 IPC 事件
+     * @private
+     */
     ipcMain.handle('open-folder', async (event, folderPath: string) => {
       try {
-        await shell.openPath(folderPath)
-        return true
+        const dir = path.dirname(folderPath)
+        if (!fs.existsSync(dir)) {
+          await shell.openPath(folderPath)
+          return true
+        } else {
+          logger.error('文件夹不存在')
+          return false
+        }
       } catch (e) {
         logger.error('打开文件夹失败:', e)
         return false
