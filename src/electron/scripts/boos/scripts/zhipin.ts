@@ -1,7 +1,6 @@
 import { Page, ElementHandle } from 'puppeteer-core'
 import { logger, randomDelay } from '../../../utils/index.js'
 import { Config } from '../../../../types/electron.js'
-
 /**
  * 自动选择城市并搜索职位
  *
@@ -100,7 +99,6 @@ export async function clickAllJobsAndCommunicate(page: Page) {
     }
 
     for (let i = lastJobCount; i < currentJobCount; i++) {
-      // 处理职位
       await handleJobBox(jobBoxes[i], page)
     }
 
