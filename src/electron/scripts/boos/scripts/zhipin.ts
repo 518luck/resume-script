@@ -75,6 +75,31 @@ export async function selectCity(page: Page, config: Config) {
   logger.info('搜索结果出现')
 }
 
+// 处理 Boss 页面筛选逻辑
+export const handleBossFilterChange = async (page: Page, config: Config) => {
+  const selects = await page.$$('.current-select')
+
+  for (const select of selects) {
+    const text = await select.$eval('.placeholder-text', (el) =>
+      el.textContent?.trim()
+    )
+    if (
+      text === '求职类型' &&
+      'jobType' in config &&
+      config.jobType !== null &&
+      config.jobType !== ''
+    ) {
+      logger.info(`发现用户勾选了求职类型,正在筛选求职类型`)
+      await select.click()
+      await randomDelay(500, 1500)
+
+      await page.click(`li[ka="${config.jobType}"]`)
+
+      await randomDelay(500, 1500)
+    }
+  }
+}
+
 /**
  * 自动遍历并与所有职位卡片进行沟通。
  *

@@ -1,7 +1,11 @@
 import { launchBrowser } from './scripts/browser.js'
 import logger from '../../utils/logger.js'
 import { isLoggedIn, autoLogin } from './scripts/loginService.js'
-import { selectCity, clickAllJobsAndCommunicate } from './scripts/zhipin.js'
+import {
+  selectCity,
+  clickAllJobsAndCommunicate,
+  handleBossFilterChange,
+} from './scripts/zhipin.js'
 // import { fetchWoffFromPage } from './utils/woffFetcher'
 import { Config } from '../../../types/electron.js'
 
@@ -34,6 +38,10 @@ export async function runBossAutoDeliver(config: Config) {
 
     logger.info('开始选择城市')
     await selectCity(page, config)
+
+    logger.info('进入Boss页面筛选逻辑')
+    await handleBossFilterChange(page, config)
+
     logger.info('自动遍历并与所有职位卡片进行沟通')
     await clickAllJobsAndCommunicate(page)
   } catch (err) {
