@@ -92,10 +92,50 @@ export const handleBossFilterChange = async (page: Page, config: Config) => {
       logger.info(`发现用户勾选了求职类型,正在筛选求职类型`)
       await select.click()
       await randomDelay(500, 1500)
-
       await page.click(`li[ka="${config.jobType}"]`)
-
       await randomDelay(500, 1500)
+    }
+    if (
+      text === '薪资待遇' &&
+      'jobSalary' in config &&
+      config.jobSalary !== null &&
+      config.jobSalary !== ''
+    ) {
+      logger.info(`发现用户勾选了薪资待遇,正在筛选薪资待遇`)
+      await select.click()
+      await randomDelay(500, 1500)
+      await page.click(`li[ka="${config.jobSalary}"]`)
+      await randomDelay(500, 1500)
+    }
+
+    if (text === '工作经验' && config.jobExperience) {
+      logger.info(`发现用户勾选了工作经验,正在筛选工作经验`)
+      await select.click()
+      await randomDelay(500, 1500)
+      for (const item of config.jobExperience) {
+        await page.click(`li[ka="${item}"]`)
+        await randomDelay(500, 1500)
+      }
+    }
+
+    if (text === '学历要求' && config.jobEducation) {
+      logger.info(`发现用户勾选了学历要求,正在筛选学历要求`)
+      await select.click()
+      await randomDelay(500, 1500)
+      for (const item of config.jobEducation) {
+        await page.click(`li[ka="${item}"]`)
+        await randomDelay(500, 1500)
+      }
+    }
+
+    if (text === '公司规模' && config.jobScale) {
+      logger.info(`发现用户勾选了公司规模,正在筛选公司规模`)
+      await select.click()
+      await randomDelay(500, 1500)
+      for (const item of config.jobScale) {
+        await page.click(`li[ka="${item}"]`)
+        await randomDelay(500, 1500)
+      }
     }
   }
 }
