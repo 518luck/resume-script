@@ -184,11 +184,14 @@
 }
 
 .selectCitys {
-  :global(.ant-select-selector) {
-    background-color: #2a2d35 !important; // 背景颜色
-    border: 1px solid #3a3d45 !important;
-    color: #fff !important;
-    transition: all 0.3s ease !important;
+  width: 100px !important;
+  :global {
+    .ant-select-selector {
+      background-color: #2a2d35 !important;
+      border: 1px solid #3a3d45 !important;
+      color: #fff;
+      box-shadow: none !important;
+    }
   }
 }
 

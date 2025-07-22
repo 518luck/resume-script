@@ -67,19 +67,28 @@
   .footer {
     flex: 3;
     max-height: 100%;
-    overflow-y: auto;
     width: 100%;
     background-color: #1b1e24;
     border-radius: 10px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    overflow-y: auto;
 
-    .footer_top {
-      :global(.ant-select-selector) {
-        background-color: #2a2d35 !important; // 背景颜色
-        border: 1px solid #3a3d45 !important;
-        color: #fff !important;
-        transition: all 0.3s ease !important;
+    .footer_letf {
+      padding: 20px;
+      .select {
+        width: 200px;
+        :global {
+          .ant-select-selector {
+            background-color: #2a2e35;
+            border: 1px solid #3a3d45 !important;
+            box-shadow: none !important;
+            color: #fff;
+          }
+          .ant-select-selection-wrap,
+          .ant-select-selection-placeholder {
+            color: #fff !important; // 你想要的提示文字颜色
+            opacity: 1 !important; // 防止有些浏览器默认透明
+          }
+        }
       }
     }
   }

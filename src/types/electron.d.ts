@@ -4,6 +4,11 @@ export interface Config {
   city?: string
   job?: string
   portNumber?: number
+  jobType?: string
+  jobSalary?: string
+  jobExperience?: string[]
+  jobEducation?: string[]
+  jobScale?: string[]
   [key: string]: unknown
 }
 

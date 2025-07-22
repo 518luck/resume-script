@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { FormProps } from 'antd'
+import { useEffect, useState } from 'react'
 import {
   Form,
   Input,
@@ -20,40 +19,21 @@ import {
   BranchesOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import { debounce } from 'lodash'
 
 import type { Config } from '../../../types/electron'
 import Guide from './components/guide'
+import { cityOptions } from './config'
+import { loadSavedConfig, formSaveConfigOnFinish } from '../../utils'
 import styles from './index.module.scss'
 
 const Config = () => {
-  const [form] = Form.useForm()
   const [configPath, setConfigPath] = useState<string>('')
   const [browserUserDataDir, setBrowserUserDataDir] = useState<string>('')
   const [isGuideVisible, setIsGuideVisible] = useState<boolean>(false)
-
-  const cityOptions = [
-    { label: '深圳', value: '深圳' },
-    { label: '北京', value: '北京' },
-    { label: '上海', value: '上海' },
-    { label: '广州', value: '广州' },
-  ]
+  const [form] = Form.useForm()
 
   useEffect(() => {
-    const loadSavedConfig = async () => {
-      try {
-        const config = await window.electronAPI.loadConfig()
-        if (config && Object.keys(config).length > 0) {
-          form.setFieldsValue(config)
-          message.success('配置加载成功')
-        }
-      } catch (error) {
-        message.error('配置加载失败')
-        console.error('配置加载失败', error)
-      }
-    }
-
-    loadSavedConfig()
+    loadSavedConfig(form)
   }, [form])
 
   useEffect(() => {
@@ -90,39 +70,6 @@ const Config = () => {
     }
   }
 
-  // 保存配置
-  /*  const handleSaveConfigOnFinish: FormProps['onFinish'] = async (values) => {
-    try {
-      const success = await window.electronAPI.saveConfig(values)
-      if (success) {
-        message.success('配置保存成功')
-      } else {
-        message.error('配置保存失败')
-      }
-    } catch (error) {
-      console.error('保存配置失败:', error)
-      message.error('保存失败')
-    }
-  } */
-
-  const handleSaveConfigOnFinish: FormProps['onFinish'] = useMemo(
-    () =>
-      debounce(async (values) => {
-        try {
-          const success = await window.electronAPI.saveConfig(values)
-          if (success) {
-            message.success('配置保存成功')
-          } else {
-            message.error('配置保存失败')
-          }
-        } catch (error) {
-          console.error('保存配置失败:', error)
-          message.error('保存失败')
-        }
-      }, 1000),
-    []
-  )
-
   const handleInputOnchange = async (
     fieldName: keyof Config,
     value: string | number | boolean
@@ -133,8 +80,7 @@ const Config = () => {
     const newValues = { ...currentValues, [fieldName]: value }
     try {
       await form.validateFields()
-
-      handleSaveConfigOnFinish(newValues)
+      formSaveConfigOnFinish(newValues)
     } catch (error) {
       console.error('表单校验失败:', error)
     }
@@ -206,6 +152,7 @@ const Config = () => {
                       .toLowerCase()
                       .includes(input.toLowerCase())
                   }
+                  allowClear
                   options={cityOptions}
                   className={styles.selectCitys}
                   onChange={(value) => handleInputOnchange('city', value)}
