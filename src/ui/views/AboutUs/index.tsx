@@ -1,5 +1,10 @@
-import { Divider, Space } from 'antd'
-import { CopyrightOutlined, HeartOutlined, QqOutlined } from '@ant-design/icons'
+import { Button, Divider, Space } from 'antd'
+import {
+  CopyrightOutlined,
+  GithubOutlined,
+  HeartOutlined,
+  QqOutlined,
+} from '@ant-design/icons'
 
 import ShineStarIcon from '../../assets/ShineStarIcon'
 import styles from './index.module.scss'
@@ -50,7 +55,23 @@ const AboutUs = () => {
       </header>
 
       <footer>
-        <button onClick={handleClickStar}>点赞</button>
+        <h3>👋 您好!</h3>
+        <span>您在试用过程中发现它对您有帮助,可以个帮忙吗</span>
+        <ul>
+          <li>前往 GitHub 仓库点击右上角 Star。</li>
+          <li>将项目分享给更多可能需要的朋友。</li>
+          <li>通过 Issue / Discussion 反馈建议或提交 PR 共同完善。</li>
+          <li>
+            您的每一次
+            Star、反馈与分享，都是对开源社区最宝贵的支持，也将直接转化为项目持续迭代的动力。
+          </li>
+        </ul>
+        <Space>
+          <Button ghost onClick={handleClickStar} icon={<GithubOutlined />}>
+            link
+          </Button>
+          🥰
+        </Space>
       </footer>
     </div>
   )
