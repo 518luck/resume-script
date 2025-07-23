@@ -1,0 +1,22 @@
+.nowcoder {
+  background-color: #1e2128;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .emoji {
+    font-size: 200px;
+    margin-bottom: 20px;
+    animation: bounce 0.5s infinite alternate;
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
