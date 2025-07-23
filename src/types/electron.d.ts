@@ -39,6 +39,8 @@ interface ElectronAPI {
   openFolder: (folderPath: string) => Promise<boolean>
   // 暂停自动投递
   stopBossAutoDeliver: () => Promise<void>
+  // 跳转Ycursor界面
+  openUrl: (url: string) => Promise<void>
 }
 
 declare global {

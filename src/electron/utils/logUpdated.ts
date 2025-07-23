@@ -34,7 +34,6 @@ export function watchLogFile(win: BrowserWindow) {
       })
       stream.on('end', () => {
         win.webContents.send('log-updated', newData)
-        console.log('推送日志到前端:', newData)
       })
       lastSize = curr.size
     }

@@ -126,5 +126,12 @@ export class IpcManager {
     ipcMain.handle('stop-boss-auto-deliver', async () => {
       IpcManager.isStopped = true
     })
+
+    /**
+     * 跳转Ycursor界面
+     */
+    ipcMain.handle('open-url', async (_, url) => {
+      shell.openExternal(url)
+    })
   }
 }

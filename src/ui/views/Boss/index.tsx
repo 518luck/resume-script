@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, message, Select, Tooltip, Form } from 'antd'
+import { Button, message, Select, Tooltip, Form, Space } from 'antd'
 import { AppstoreOutlined } from '@ant-design/icons'
 
 import {
@@ -91,12 +91,14 @@ const Boss = () => {
       </header>
       <main className={styles.main}>
         <div className={styles.main_left}>
-          <Button type='primary' onClick={handleRunBossAutoDeliverOnClick}>
-            一件投递
-          </Button>
-          <Button type='primary' onClick={handlePauseBossAutoDeliverOnClick}>
-            结束投递
-          </Button>
+          <Space size={10}>
+            <Button type='primary' onClick={handleRunBossAutoDeliverOnClick}>
+              自动投递
+            </Button>
+            <Button type='primary' onClick={handlePauseBossAutoDeliverOnClick}>
+              结束投递
+            </Button>
+          </Space>
         </div>
         <div className={styles.main_right}>鸡汤</div>
       </main>

@@ -57,11 +57,17 @@
       margin-right: 15px;
       background-color: #21252d;
       border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .main_right {
       flex: 3;
       background-color: #21252d;
       border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   .footer {

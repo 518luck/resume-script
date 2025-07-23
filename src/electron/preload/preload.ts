@@ -51,4 +51,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // 暂停自动投递
   stopBossAutoDeliver: () => ipcRenderer.invoke('stop-boss-auto-deliver'),
+
+  // 跳转Ycursor界面
+  openUrl: (url: string) => ipcRenderer.invoke('open-url', url),
 })
