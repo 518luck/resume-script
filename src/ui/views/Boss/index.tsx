@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, message, Select, Tooltip, Form, Space } from 'antd'
+import { Button, message, Select, Tooltip, Form, Space, Typography } from 'antd'
 import { AppstoreOutlined } from '@ant-design/icons'
 
 import {
@@ -20,8 +20,13 @@ import styles from './index.module.scss'
 
 const Boss = () => {
   const [logPath, setLogPath] = useState<string>('')
+  const [encouragementTextCN, setEncouragementTextCN] = useState<string>('')
+  const [encouragementTextEN, setEncouragementTextEN] = useState<string>('')
+  const [date, setDate] = useState<string>('')
   const navigate = useNavigate()
   const [form] = Form.useForm()
+
+  const { Paragraph } = Typography
 
   useEffect(() => {
     window.electronAPI.getLogPath().then((path) => {
@@ -32,6 +37,16 @@ const Boss = () => {
   useEffect(() => {
     loadSavedConfig(form)
   }, [form])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/dsapi')
+      .then((res) => res.json())
+      .then((data) => {
+        setEncouragementTextCN(data.note)
+        setEncouragementTextEN(data.content)
+        setDate(data.dateline)
+      })
+  })
 
   const handleRunBossAutoDeliverOnClick = async () => {
     const result = await checkRequiredConfig(navigate)
@@ -81,11 +96,10 @@ const Boss = () => {
                 <span>{logPath}</span>
               </Tooltip>
             </div>
-            <span>日志地址</span>
           </div>
           <div className={styles.header_footer_footer}>
-            <span>日志地址</span>
-            <span>日志地址</span>
+            <span>当前时间:</span>
+            <div className={styles.date}>{date}</div>
           </div>
         </div>
       </header>
@@ -100,7 +114,14 @@ const Boss = () => {
             </Button>
           </Space>
         </div>
-        <div className={styles.main_right}>鸡汤</div>
+        <div className={styles.main_right}>
+          <Paragraph copyable ellipsis className={styles.encouragementText}>
+            {encouragementTextCN}
+          </Paragraph>
+          <Paragraph copyable ellipsis className={styles.encouragementText}>
+            {encouragementTextEN}
+          </Paragraph>
+        </div>
       </main>
       <footer className={styles.footer}>
         <div className={styles.footer_letf}>
@@ -159,6 +180,7 @@ const Boss = () => {
             </Form.Item>
           </Form>
         </div>
+        <div className={styles.footer_right}>暂时未开发</div>
       </footer>
     </div>
   )

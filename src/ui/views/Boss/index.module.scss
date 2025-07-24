@@ -42,8 +42,14 @@
       .header_footer_footer {
         flex: 1;
         display: flex;
-        flex-direction: column;
         justify-content: flex-start;
+        .date {
+          color: #fff;
+          font-size: 14px;
+          line-height: 14px;
+          margin-top: 3px;
+          margin-left: 7px;
+        }
       }
     }
   }
@@ -66,8 +72,16 @@
       background-color: #21252d;
       border-radius: 10px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      .encouragementText {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+      }
     }
   }
   .footer {
@@ -77,6 +91,7 @@
     background-color: #1b1e24;
     border-radius: 10px;
     overflow-y: auto;
+    display: flex;
 
     .footer_letf {
       padding: 20px;
@@ -96,6 +111,12 @@
           }
         }
       }
+    }
+    .footer_right {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   .footer::-webkit-scrollbar {
