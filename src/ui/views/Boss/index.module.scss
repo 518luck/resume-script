@@ -101,14 +101,30 @@
   }
   .footer {
     flex: 3;
-    max-height: 100%;
-    width: 100%;
+    // max-height: 100%;
     background-color: #1b1e24;
     border-radius: 10px;
     overflow-y: auto;
     display: flex;
-
-    .footer_letf {
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: linear-gradient(220.55deg, #1c1815 0%, #46425a 100%);
+      border-radius: 50px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #144054 0%, #14493a 100%);
+      border-radius: 3px;
+      cursor: pointer;
+      &:hover {
+        background: linear-gradient(180deg, #2a9dd3 0%, #23daa6 100%);
+      }
+    }
+    .footer::-webkit-scrollbar {
+      display: none;
+    }
+    .footer_left {
       padding: 20px;
       .select {
         width: 200px;
@@ -133,8 +149,5 @@
       justify-content: center;
       align-items: center;
     }
-  }
-  .footer::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Edge */
   }
 }

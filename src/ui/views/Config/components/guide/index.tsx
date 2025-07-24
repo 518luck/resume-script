@@ -3,7 +3,7 @@ import styles from './index.module.scss'
 const Guide = () => {
   return (
     <div className={styles.guide}>
-      <header className={styles.guide_header}>🐶欢迎使用 多云AR</header>
+      <header className={styles.guide_header}>🦉欢迎使用 多云AR</header>
       <div className={styles.guide_content}>
         <span>👋嗨,我是 多云</span>
         <span>感谢您使用 多云AR，第一次使用Electron制作这种桌面程序，</span>

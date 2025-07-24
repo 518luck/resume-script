@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <div className={styles.logo}>
       <img src={logo} alt='logo' className={styles.logoImg} />
-      <span>多云RA</span>
+      <span>RA</span>
     </div>
   )
 }

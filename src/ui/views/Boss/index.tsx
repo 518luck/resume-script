@@ -131,7 +131,7 @@ const Boss = () => {
         </div>
       </main>
       <footer className={styles.footer}>
-        <div className={styles.footer_letf}>
+        <div className={styles.footer_left}>
           <Form form={form}>
             <Form.Item name='jobType'>
               <Select
