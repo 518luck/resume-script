@@ -3,7 +3,7 @@ export const parseLogWithColors = (logText: string) => {
 
   return logText.replace(
     /(\[INFO\]|\[WARNING\]|\[ERROR\])([^\n]*)/g,
-    (match, tag, content) => {
+    (tag, content) => {
       const level = tag.slice(1, -1)
       const className = `log-${level.toLowerCase()}`
       return `<span class="${className}">${tag}${content}</span>`
