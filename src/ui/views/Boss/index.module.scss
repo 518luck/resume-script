@@ -66,6 +66,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      .autoDeliverBtn {
+        background-color: #2b9d7c;
+        transition: all 0.3s ease;
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 15px rgba(43, 157, 124, 0.7);
+        }
+      }
+      .pauseBtn {
+        color: #aaaaaa;
+        border: 1px dashed #aaaaaa;
+        &:hover {
+          background-color: #2a2e35;
+        }
+      }
     }
     .main_right {
       flex: 3;

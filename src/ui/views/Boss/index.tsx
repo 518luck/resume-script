@@ -106,10 +106,17 @@ const Boss = () => {
       <main className={styles.main}>
         <div className={styles.main_left}>
           <Space size={10}>
-            <Button type='primary' onClick={handleRunBossAutoDeliverOnClick}>
+            <Button
+              type='primary'
+              className={styles.autoDeliverBtn}
+              onClick={handleRunBossAutoDeliverOnClick}>
               自动投递
             </Button>
-            <Button type='primary' onClick={handlePauseBossAutoDeliverOnClick}>
+            <Button
+              type='dashed'
+              ghost
+              className={styles.pauseBtn}
+              onClick={handlePauseBossAutoDeliverOnClick}>
               结束投递
             </Button>
           </Space>
