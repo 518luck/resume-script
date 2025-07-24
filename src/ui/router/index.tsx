@@ -1,6 +1,6 @@
 import { createHashRouter, Navigate } from 'react-router-dom'
-import { Suspense } from 'react'
-import React from 'react'
+import React, { Suspense } from 'react'
+import { Empty } from 'antd'
 
 import App from '../App'
 
@@ -22,7 +22,7 @@ const router = createHashRouter([
       {
         path: '/config',
         element: (
-          <Suspense fallback={<div>加载中...</div>}>
+          <Suspense fallback={<Empty />}>
             <Config />
           </Suspense>
         ),
@@ -30,7 +30,7 @@ const router = createHashRouter([
       {
         path: '/boss',
         element: (
-          <Suspense fallback={<div>加载中...</div>}>
+          <Suspense fallback={<Empty />}>
             <Boss />
           </Suspense>
         ),
@@ -38,7 +38,7 @@ const router = createHashRouter([
       {
         path: '/nowcoder',
         element: (
-          <Suspense fallback={<div>加载中...</div>}>
+          <Suspense fallback={<Empty />}>
             <Nowcoder />
           </Suspense>
         ),
@@ -46,7 +46,7 @@ const router = createHashRouter([
       {
         path: '/about',
         element: (
-          <Suspense fallback={<div>加载中...</div>}>
+          <Suspense fallback={<Empty />}>
             <AboutUs />
           </Suspense>
         ),
@@ -54,7 +54,7 @@ const router = createHashRouter([
       {
         path: '/logs',
         element: (
-          <Suspense fallback={<div>加载中...</div>}>
+          <Suspense fallback={<Empty />}>
             <Log />
           </Suspense>
         ),
